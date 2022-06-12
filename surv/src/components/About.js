@@ -7,7 +7,7 @@ const About = () => {
         color: '#fff',
         lineHeight: '750px',
         textAlign: 'center',
-        background: '#1890ff',
+        background: '#DAF',
       };
     return (
         <div style = {contentStyle}>

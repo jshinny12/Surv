@@ -13,7 +13,7 @@ const NavBar = () => {
       
     return (
         <div>
-            <AppBar position = 'static'>
+            <AppBar position = 'static' style = {{background: '#DAF'}}>
                 <Toolbar variant="dense">
                     <IconButton size="large"
                         edge="start"
@@ -27,9 +27,9 @@ const NavBar = () => {
                     </Typography>
                     <Stack direction = 'row' spacing = {2} style = {butt}> 
                         <Button color = 'inherit' onClick = {(e) => navigate('/')}> Home </Button>
+                        <Button color = 'inherit' onClick = {(e) => navigate('/survey')}> Survey </Button>
                         <Button color = 'inherit' onClick = {(e) => navigate('/about')}> About </Button>
                         <Button color = 'inherit' onClick = {(e) => navigate('/contact')}> Contact </Button>
-                        <Button color = 'inherit' onClick = {(e) => navigate('/faq')}> Faq </Button>
                     </Stack>
                 </Toolbar>
             </AppBar>
