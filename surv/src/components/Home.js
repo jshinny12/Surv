@@ -17,32 +17,7 @@ const Home = () => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
     };
-
-
-    
-    function Item(props)
-    {
-        return (
-            <div style = {contentStyle}>
-                <h1> {props.item.name} </h1>
-            </div>
-        )
-    }
       
-    var items = [
-        {
-            name: "Welcome to Surv",
-        },
-        {
-            name: "A minimalist way of creating surveys.",
-        },
-        {
-            name: "Offering ease of access to secure, reliable, and unique responses.",
-        },
-        {
-            name: "Made using ZK-technology",
-        }
-    ]
 
     return (
         <div style = {contentStyle}>
