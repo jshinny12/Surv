@@ -10,7 +10,7 @@ const Survey = () => {
       };
     return (
         <div style = {contentStyle}>
-            <h1> Survey </h1>
+            <h1> Take Survey </h1>
         </div>
     )
 }

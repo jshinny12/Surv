@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar } from '@mui/material';
 
 const About = () => {
-
+  
     const contentStyle = {
         height: '750px',
         color: '#fff',

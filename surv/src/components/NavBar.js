@@ -27,9 +27,9 @@ const NavBar = () => {
                     </Typography>
                     <Stack direction = 'row' spacing = {2} style = {butt}> 
                         <Button color = 'inherit' onClick = {(e) => navigate('/')}> Home </Button>
-                        <Button color = 'inherit' onClick = {(e) => navigate('/survey')}> Survey </Button>
+                        <Button color = 'inherit' onClick = {(e) => navigate('/contact')}> Make Survey </Button>
+                        <Button color = 'inherit' onClick = {(e) => navigate('/survey')}> Take Survey </Button>
                         <Button color = 'inherit' onClick = {(e) => navigate('/about')}> About </Button>
-                        <Button color = 'inherit' onClick = {(e) => navigate('/contact')}> Contact </Button>
                     </Stack>
                 </Toolbar>
             </AppBar>
