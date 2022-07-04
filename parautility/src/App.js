@@ -7,8 +7,10 @@ import Survey from "./components/Survey";
 import Home from './components/Home';
 import { Button, Box } from '@mui/material';
 import Bottom from "./components/Bottom";
-import MetamaskButton from "./components/MetamaskButton";
 import {useState} from 'react';
+import Login from './components/Login'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./App.css"
 
 
 
@@ -48,14 +50,14 @@ function App() {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              bgcolor: "#E8c5ff",
+              bgcolor: "grey",
               height: "100vh",
               width: 'auto'
             }}
           >
       <Button 
       variant="contained" 
-      sx={{backgroundColor: '#DAF' }} 
+      sx={{backgroundColor: 'black' }} 
       onClick = {connectWalletHandler}
       > 
       Connect Your Wallet! 
@@ -76,6 +78,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/survey" element={<Survey />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Bottom />
       </BrowserRouter>

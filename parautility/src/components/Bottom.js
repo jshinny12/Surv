@@ -10,7 +10,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Surv
+        Parautility
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -41,7 +41,7 @@ export default function Bottom() {
       >
         <Container maxWidth="sm">
           <Typography variant="body1">
-            ZKU Harmony
+            Parautility
           </Typography>
           <Copyright />
         </Container>
