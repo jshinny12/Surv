@@ -2,8 +2,8 @@ import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import About from "./components/About";
-import Contact from "./components/Contact";
-import Survey from "./components/Survey";
+import Customer from "./components/Customer";
+import Company from "./components/Company";
 import Home from './components/Home';
 import { Button, Box } from '@mui/material';
 import Bottom from "./components/Bottom";
@@ -76,8 +76,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/survey" element={<Survey />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/company" element={<Company />} />
           <Route path="/login" element={<Login />} />
         </Routes>
         <Bottom />

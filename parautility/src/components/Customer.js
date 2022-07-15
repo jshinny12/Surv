@@ -1,10 +1,11 @@
 import React from 'react'
-import AboutEach from './AboutEach'
+import {useState} from 'react'
 
-const About = () => {
-  
+const Customer = () => {
+    const[cards, setCards] = useState([]);
+
     const contentStyle = {
-        height: '500px',
+        height: '750px',
         color: '#fff',
         textAlign: 'center',
         background: '#181818',
@@ -18,14 +19,15 @@ const About = () => {
         margin: '0px 0px 0px 0px',
         transform: 'translate(-50%, -50%)',
       }
+
+
     return (
       <>
         <div style = {contentStyle}>
               <h1 style = {paragraphStyle}> Meet the Team </h1>
         </div>
-        <AboutEach />
       </>
     )
 }
 
-export default About
+export default Customer

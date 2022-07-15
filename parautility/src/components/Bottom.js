@@ -25,6 +25,7 @@ export default function Bottom() {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '13vh',
+        backgroundColor: 'white',
       }}
     >
       <Box
@@ -33,10 +34,7 @@ export default function Bottom() {
           py: 3,
           px: 2,
           mt: 'auto',
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[200]
-              : theme.palette.grey[800],
+          color: '#181818',
         }}
       >
         <Container maxWidth="sm">

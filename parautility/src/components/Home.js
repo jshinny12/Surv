@@ -1,5 +1,7 @@
 import React from 'react'
 import {Carousel} from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home2 from './Home2'
 
 
 
@@ -7,9 +9,11 @@ const Home = () => {
     const contentStyle = {
         height: '750px',
         color: '#fff',
-        background: 'grey',
+        background: '#181818',
         position: 'relative',
-
+        left: '0px',
+        top: '30%',
+        position: 'relative',
     };
 
     const boxStyle = {
@@ -17,30 +21,37 @@ const Home = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
+        color: 'white',
     };
       
 
     return (
-        <Carousel variant="dark" style = {contentStyle}>
-        <Carousel.Item>
-            <Carousel.Caption>
-            <h5>First slide label</h5>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        <>
+        <Carousel fade variant="dark">
+        <Carousel.Item style = {contentStyle}>
+            <Carousel.Caption style = {boxStyle}>
+            <h1>Welcome to Tradim</h1>
             </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item>
-            <Carousel.Caption>
-            <h5>Second slide label</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <Carousel.Item style = {contentStyle}>
+            <Carousel.Caption style = {boxStyle}>
+            <h1>A novel approach in trading discounts</h1>
             </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item>
-            <Carousel.Caption>
-            <h5>Third slide label</h5>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        <Carousel.Item style = {contentStyle}>
+            <Carousel.Caption style = {boxStyle}>
+            <h1>Securitized on the Blockchain</h1>
             </Carousel.Caption>
         </Carousel.Item>
         </Carousel>
+
+        <Home2 />
+
+    
+        
+
+
+        </>
     )
 }
 

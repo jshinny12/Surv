@@ -1,10 +1,8 @@
 import React from 'react'
-import AboutEach from './AboutEach'
 
-const About = () => {
-  
+const Company = () => {
     const contentStyle = {
-        height: '500px',
+        height: '750px',
         color: '#fff',
         textAlign: 'center',
         background: '#181818',
@@ -23,9 +21,8 @@ const About = () => {
         <div style = {contentStyle}>
               <h1 style = {paragraphStyle}> Meet the Team </h1>
         </div>
-        <AboutEach />
       </>
     )
 }
 
-export default About
+export default Company

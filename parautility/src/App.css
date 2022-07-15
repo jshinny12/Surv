@@ -38,3 +38,19 @@ label {
   font-weight: 600;
   color: rgb(34, 34, 34);
 }
+
+.light-f-o-o-t-e-r-4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 107px 0px;
+  background-color: #181818;
+}
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 199px;
+}
