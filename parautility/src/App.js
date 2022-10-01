@@ -11,63 +11,69 @@ import {useState} from 'react';
 import Login from './components/Login'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
+import Contact from "./components/Contact";
 
 
 
 function App() {
-  const [currentWallet, setCurrentWallet] = useState(null);
+    const [currentWallet, setCurrentWallet] = useState(null);
 
-  const connectWallet = async() => {
+    const connectWallet = async() => {
+          if (!window.ethereum) {
+              alert('Please install Metamask!');
+          } else {
+            const accounts = await window.ethereum.request({
+              method: 'eth_requestAccounts'
+            });
 
-      if (!window.ethereum) {
-          alert('Please install Metamask!');
-      } else {
-        const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts'
-        });
+            if (accounts.length !== 0) {
+                const account = accounts[0];
+                console.log("Found an account! Address: ", accounts[0]);
+                setCurrentWallet(account);
+            } else {
+                console.log('No authorized account found');
+            }
 
-        if (accounts.length !== 0) {
-            const account = accounts[0];
-            console.log("Found an account! Address: ", accounts[0]);
-            setCurrentWallet(account);
-        } else {
-            console.log('No authorized account found');
-        }
+          }
+    }
 
-      }
-  }
-
-  const connectWalletHandler = async() => {
+    const connectWalletHandler = async() => {
     await connectWallet();
-  }
+    }
 
-  const walletButton = () => {
-    return (
-      <Box
-            textAlign="center"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              bgcolor: "grey",
-              height: "100vh",
-              width: 'auto'
-            }}
-          >
-      <Button 
-      variant="contained" 
-      sx={{backgroundColor: 'black' }} 
-      onClick = {connectWalletHandler}
-      > 
-      Connect Your Wallet! 
-      </Button>
-      </Box>
-    )
-  }
+    const walletButton = () => {
+        return (
+            <Box
+                textAlign="center"
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    bgcolor: "grey",
+                    height: "100vh",
+                    width: 'auto'
+                }}
+            >
+                <Button
+                    variant="contained"
+                    sx={{backgroundColor: 'black'}}
+                    onClick={connectWalletHandler}
+                >
+                    Connect Your Wallet!
+                </Button>
+            </Box>
+        )
+    }
+
+    const home = Home();
+    const nav = Navbar();
 
 
+    return (home)
 
+
+    /*
   return (
     <div>
       {!currentWallet ? <div>{walletButton()}</div> : 
@@ -85,6 +91,8 @@ function App() {
       }
     </div>
   )
+
+     */
   
 
 }
