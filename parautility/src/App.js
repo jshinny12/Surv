@@ -66,35 +66,31 @@ function App() {
         )
     }
 
+    const makeRouter = () => {
+        return (
+            <BrowserRouter>
+                <Navbar/>
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/about" element={<About/>}/>
+                    <Route path="/customer" element={<Customer/>}/>
+                    <Route path="/company" element={<Company/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                </Routes>
+                <Bottom/>
+            </BrowserRouter>
+        )
+    }
+
     const home = Home();
     const nav = Navbar();
+    const router = makeRouter();
 
-
-    return (home)
-
-
-    /*
-  return (
-    <div>
-      {!currentWallet ? <div>{walletButton()}</div> : 
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/customer" element={<Customer />} />
-          <Route path="/company" element={<Company />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-        <Bottom />
-      </BrowserRouter>
-      }
-    </div>
-  )
-
-     */
+    return ([nav, home, router])
   
 
 }
+
+// <div>{!currentWallet ? <div>{walletButton()}</div> :}</div>
 
 export default App;
