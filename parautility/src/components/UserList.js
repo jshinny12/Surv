@@ -8,11 +8,15 @@ const User = (props) => (
         <td>{props.user.email}</td>
         <td>{props.user.phone}</td>
         <td>{props.user.role}</td>
+        <td>{props.user.token}</td>
+        <td>{props.user.salt}</td>
+        <td>{props.user.pw_hash}</td>
         <td>
             <Link className="btn btn-link" to={`/edit/${props.user._id}`}>Edit</Link> |
             <button className="btn btn-link"
                     onClick={() => {
                         props.deleteUser(props.user._id);
+                        console.log(props.user._id)
                     }}
             >
                 Delete
@@ -36,6 +40,7 @@ export default function UserList() {
             }
 
             const users = await response.json();
+            console.log(users)
             setUsers(users);
         }
 
@@ -46,11 +51,12 @@ export default function UserList() {
 
     // This method will delete a user
     async function deleteUser(id) {
-        await fetch(`http://localhost:5000/${id}`, {
+        await fetch(`http://localhost:5000/user/${id}`, {
             method: "DELETE"
         });
 
         const newUsers = users.filter((el) => el._id !== id);
+        console.log(newUsers)
         setUsers(newUsers);
     }
 
@@ -79,6 +85,9 @@ export default function UserList() {
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Role</th>
+                    <th>Token</th>
+                    <th>Salt</th>
+                    <th>Hash</th>
                 </tr>
                 </thead>
                 <tbody>{userList()}</tbody>

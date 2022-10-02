@@ -19,6 +19,8 @@ import SignupAdmin from "./components/SignupAdmin";
 import SignupCustomer from "./components/SignupCustomer";
 import SignupMerchant from "./components/SignupMerchant";
 import UserList from "./components/UserList";
+import VerifySignup from "./components/VerifySignup";
+import LoginLanding from "./components/LoginLanding";
 
 
 function App() {
@@ -87,7 +89,9 @@ function App() {
                 <Route path="/admin-signup" element={<SignupAdmin />} />
                 <Route path="/customer-signup" element={<SignupCustomer />} />
                 <Route path="/merchant-signup" element={<SignupMerchant />} />
+                <Route exact path="/verify" element={<VerifySignup />} />
                 <Route exact path="/users" element={<UserList />} />
+                <Route exact path="/login-landing" element={<LoginLanding />} />
             </Routes>
             <Bottom />
         </div>

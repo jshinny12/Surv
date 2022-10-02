@@ -23,9 +23,21 @@ userRoutes.route("/user").get(function (req, res) {
         });
 });
 
+// This section will help you get a list of all the records.
+userRoutes.route("/user-by-email").post(function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+    console.log("Looking for user by email");
+    db_connect
+        .collection("users")
+        .findOne({email: req.body.email}, function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
 // This section will help you get a single record by id
 userRoutes.route("/user/:id").get(function (req, res) {
-    let db_connect = dbo.getDb();
+    let db_connect = dbo.getDb("tradim");
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect
         .collection("users")
@@ -38,12 +50,13 @@ userRoutes.route("/user/:id").get(function (req, res) {
 // This section will help you create a new record.
 userRoutes.route("/signup-admin").post(function (req, response) {
     console.log("attempting to add user")
-    let db_connect = dbo.getDb();
+    let db_connect = dbo.getDb("tradim");
     let myobj = {
         fname: req.body.fname,
         lname: req.body.lname,
         email: req.body.email,
         phone: req.body.phone,
+        token: req.body.token,
         role: "admin"
     };
     db_connect.collection("users").insertOne(myobj, function (err, res) {
@@ -54,7 +67,7 @@ userRoutes.route("/signup-admin").post(function (req, response) {
 
 // This section will help you create a new record.
 userRoutes.route("/signup-customer").post(function (req, response) {
-    let db_connect = dbo.getDb();
+    let db_connect = dbo.getDb("tradim");
     let myobj = {
         fname: req.body.fname,
         lname: req.body.lname,
@@ -70,7 +83,7 @@ userRoutes.route("/signup-customer").post(function (req, response) {
 
 // This section will help you create a new record.
 userRoutes.route("/signup-merchant").post(function (req, response) {
-    let db_connect = dbo.getDb();
+    let db_connect = dbo.getDb("tradim");
     let myobj = {
         fname: req.body.fname,
         lname: req.body.lname,
@@ -87,7 +100,7 @@ userRoutes.route("/signup-merchant").post(function (req, response) {
 
 // This section will help you update a record by id.
 userRoutes.route("/update/:id").post(function (req, response) {
-    let db_connect = dbo.getDb();
+    let db_connect = dbo.getDb("tradim");
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {
         $set: {
@@ -105,9 +118,29 @@ userRoutes.route("/update/:id").post(function (req, response) {
         });
 });
 
+// This section will help you set a user's password given their email.
+userRoutes.route("/set-password").post(function (req, response) {
+    let db_connect = dbo.getDb("tradim");
+    console.log("Attempt to set password")
+    let myquery = { email: req.body.email };
+    let newvalues = {
+        $set: {
+            pw_hash: req.body.pw_hash,
+            salt: req.body.salt
+        },
+    };
+    db_connect
+        .collection("users")
+        .updateOne(myquery, newvalues, function (err, res) {
+            if (err) throw err;
+            console.log("1 document updated");
+            response.json(res);
+        });
+});
+
 // This section will help you delete a record
-userRoutes.route("/:id").delete((req, response) => {
-    let db_connect = dbo.getDb();
+userRoutes.route("/user/:id").delete((req, response) => {
+    let db_connect = dbo.getDb("tradim");
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect.collection("users").deleteOne(myquery, function (err, obj) {
         if (err) throw err;

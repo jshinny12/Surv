@@ -90,6 +90,8 @@ const SignupAdmin = () => {
 
         // When a post request is sent to the create url, we'll add a new record to the database.
         const newPerson = { ...form };
+        newPerson.token = new_token;
+        console.log(newPerson.token)
 
         await fetch("http://localhost:5000/signup-admin", {
             method: "POST",
@@ -137,7 +139,7 @@ const SignupAdmin = () => {
                     <input
                         type="text"
                         className="form-control"
-                        id="position"
+                        id="email"
                         value={form.email}
                         onChange={(e) => updateForm({ email: e.target.value })}
                     />
