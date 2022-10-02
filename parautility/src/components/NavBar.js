@@ -24,7 +24,10 @@ const NavBar = () => {
                     <Nav.Link href="/about" style = {{color: 'white'}}>About</Nav.Link>
                     <Nav.Link href="/login" style = {{color: 'white', border: '1px solid white'}}>Login</Nav.Link>
                     <Nav.Link href="/create" style = {{color: 'white', border: '1px solid white'}}>Create Record</Nav.Link>
-                    <Nav.Link href="/records" style = {{color: 'white', border: '1px solid white'}}>View Table</Nav.Link>
+                    <Nav.Link href="/users" style = {{color: 'white', border: '1px solid white'}}>View User Table</Nav.Link>
+                    <Nav.Link href="/admin-signup" style = {{color: 'white', border: '1px solid white'}}>Admin Signup</Nav.Link>
+                    <Nav.Link href="/customer-signup" style = {{color: 'white', border: '1px solid white'}}>Customer Signup</Nav.Link>
+                    <Nav.Link href="/merchant-signup" style = {{color: 'white', border: '1px solid white'}}>Merchant Signup</Nav.Link>
                 </Nav>
                 </Offcanvas.Body>
             </Navbar.Offcanvas>

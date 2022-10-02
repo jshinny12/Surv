@@ -12,9 +12,13 @@ import Login from './components/Login'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
 import Contact from "./components/Contact";
-import RecordList from "./components/recordList";
-import Edit from "./components/edit";
-import Create from "./components/create";
+import RecordList from "./components/RecordList";
+import Edit from "./components/Edit";
+import Create from "./components/Create";
+import SignupAdmin from "./components/SignupAdmin";
+import SignupCustomer from "./components/SignupCustomer";
+import SignupMerchant from "./components/SignupMerchant";
+import UserList from "./components/UserList";
 
 
 function App() {
@@ -80,11 +84,16 @@ function App() {
                 <Route exact path="/records" element={<RecordList />} />
                 <Route path="/edit/:id" element={<Edit />} />
                 <Route path="/create" element={<Create />} />
+                <Route path="/admin-signup" element={<SignupAdmin />} />
+                <Route path="/customer-signup" element={<SignupCustomer />} />
+                <Route path="/merchant-signup" element={<SignupMerchant />} />
+                <Route exact path="/users" element={<UserList />} />
             </Routes>
-            <div>{!currentWallet ? <div>{walletButton()}</div> : <div><p>"No Current Wallet"</p></div>}</div>
             <Bottom />
         </BrowserRouter>
     )
 }
+
+// <div>{!currentWallet ? <div>{walletButton()}</div> : <div><p>"No Current Wallet"</p></div>}</div>
 
 export default App;
