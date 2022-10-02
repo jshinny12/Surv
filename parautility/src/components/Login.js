@@ -42,7 +42,7 @@ const Login = () => {
               </button>
             </div>
             <p className="text-center mt-2">
-              Forgot <a href="#">password?</a>
+              Forgot <a href="javascript:void(0)">password?</a>
             </p>
           </div>
         </form>
@@ -91,7 +91,7 @@ const Login = () => {
             </button>
           </div>
           <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
+            Forgot <a href="javascript:void(0)">password?</a>
           </p>
         </div>
       </form>

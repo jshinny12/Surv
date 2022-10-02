@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import emailjs from "@emailjs/browser"
 
 const admin_access_code = "314159"
 
-export default function SignupAdmin() {
+const SignupAdmin = () => {
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         fname: "",
         lname: "",
@@ -11,7 +14,6 @@ export default function SignupAdmin() {
         phone: "###-###-####",
         admin: ""
     });
-    const navigate = useNavigate();
 
     // These methods will update the state properties.
     function updateForm(value) {
@@ -31,9 +33,32 @@ export default function SignupAdmin() {
     }
 
     // This function tests the email string against a regular expression
-    function isValidAdmin(phone) {
+    function isValidAdmin() {
         return form.admin === admin_access_code;
     }
+
+    function generateToken(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
+
+    const sendEmail = (e, templateParams) => {
+        e.preventDefault();
+
+        emailjs.init('Yhbs32kTTPFzp9TMU')
+        emailjs.send('service_7xjki0g', 'template_gke6mby', templateParams)
+            .then((result) => {
+                console.log(result.text);
+            }, (error) => {
+                console.log(error.text);
+            });
+    };
 
     // This function will handle the submission.
     async function onSubmit(e) {
@@ -50,6 +75,18 @@ export default function SignupAdmin() {
         if (!isValidAdmin(form.admin)) {
             window.alert("Invalid Admin Code. Please Correct and Try Again")
         }
+
+        const new_token = generateToken(28)
+        console.log(new_token)
+
+        var emailParams = {
+            fname: form.fname,
+            lname: form.lname,
+            email: form.email,
+            token: new_token
+        }
+
+        sendEmail(e, emailParams)
 
         // When a post request is sent to the create url, we'll add a new record to the database.
         const newPerson = { ...form };
@@ -136,3 +173,5 @@ export default function SignupAdmin() {
         </div>
     );
 }
+
+export default SignupAdmin

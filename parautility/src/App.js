@@ -73,7 +73,7 @@ function App() {
     }
 
     return (
-        <BrowserRouter>
+        <div>
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home/>}/>
@@ -90,7 +90,7 @@ function App() {
                 <Route exact path="/users" element={<UserList />} />
             </Routes>
             <Bottom />
-        </BrowserRouter>
+        </div>
     )
 }
 
