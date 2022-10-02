@@ -12,7 +12,9 @@ import Login from './components/Login'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
 import Contact from "./components/Contact";
-
+import RecordList from "./components/recordList";
+import Edit from "./components/edit";
+import Create from "./components/create";
 
 
 function App() {
@@ -66,31 +68,23 @@ function App() {
         )
     }
 
-    const makeRouter = () => {
-        return (
-            <BrowserRouter>
-                <Navbar/>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/about" element={<About/>}/>
-                    <Route path="/customer" element={<Customer/>}/>
-                    <Route path="/company" element={<Company/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                </Routes>
-                <Bottom/>
-            </BrowserRouter>
-        )
-    }
-
-    const home = Home();
-    const nav = Navbar();
-    const router = makeRouter();
-
-    return ([nav, home, router])
-  
-
+    return (
+        <BrowserRouter>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/about" element={<About/>}/>
+                <Route path="/customer" element={<Customer/>}/>
+                <Route path="/company" element={<Company/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route exact path="/records" element={<RecordList />} />
+                <Route path="/edit/:id" element={<Edit />} />
+                <Route path="/create" element={<Create />} />
+            </Routes>
+            <div>{!currentWallet ? <div>{walletButton()}</div> : <div><p>"No Current Wallet"</p></div>}</div>
+            <Bottom />
+        </BrowserRouter>
+    )
 }
-
-// <div>{!currentWallet ? <div>{walletButton()}</div> :}</div>
 
 export default App;
