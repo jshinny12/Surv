@@ -72,7 +72,6 @@ companyRoutes.route("/add-employee").post(function (req, response) {
         {$push: {employees: ObjectId(req.body.user_id)}},
         function (err, res) {
         if (err) throw err;
-        response.json(res);
     });
 
 
