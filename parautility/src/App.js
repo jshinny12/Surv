@@ -21,6 +21,9 @@ import SignupMerchant from "./components/SignupMerchant";
 import UserList from "./components/UserList";
 import VerifySignup from "./components/VerifySignup";
 import LoginLanding from "./components/LoginLanding";
+import MerchantVerifyLanding from "./components/MerchantVerifyLanding";
+import CompanySetup from "./components/CompanySetup";
+import CompanyJoin from "./components/CompanyJoin";
 
 
 function App() {
@@ -92,6 +95,9 @@ function App() {
                 <Route exact path="/verify" element={<VerifySignup />} />
                 <Route exact path="/users" element={<UserList />} />
                 <Route exact path="/login-landing" element={<LoginLanding />} />
+                <Route exact path="/merchant-verify-landing" element={<MerchantVerifyLanding />} />
+                <Route exact path="/company-setup" element={<CompanySetup />} />
+                <Route exact path="/company-join" element={<CompanyJoin />} />
             </Routes>
             <Bottom />
         </div>

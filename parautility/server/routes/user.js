@@ -27,9 +27,8 @@ userRoutes.route("/user").get(function (req, res) {
 userRoutes.route("/user-by-email").post(function (req, res) {
     let db_connect = dbo.getDb("tradim");
     console.log("Looking for user by email");
-    db_connect
-        .collection("users")
-        .findOne({email: req.body.email}, function (err, result) {
+    db_connect.collection("users").findOne(
+        {email: req.body.email}, function (err, result) {
             if (err) throw err;
             res.json(result);
         });
@@ -73,6 +72,7 @@ userRoutes.route("/signup-customer").post(function (req, response) {
         lname: req.body.lname,
         email: req.body.email,
         phone: req.body.phone,
+        token: req.body.token,
         role: "customer"
     };
     db_connect.collection("users").insertOne(myobj, function (err, res) {
@@ -89,9 +89,10 @@ userRoutes.route("/signup-merchant").post(function (req, response) {
         lname: req.body.lname,
         email: req.body.email,
         phone: req.body.phone,
-        company: req.body.company,
+        token: req.body.token,
         role: "merchant"
     };
+
     db_connect.collection("users").insertOne(myobj, function (err, res) {
         if (err) throw err;
         response.json(res);
