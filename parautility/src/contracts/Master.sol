@@ -15,11 +15,13 @@ contract Master is Ownable {
 
     struct Restaurant {
         uint maxLevels;
-        uint percentDiscount;
+        
         uint totalRaised;
         uint totalPending;
         bool approved;
-
+        // 0 go to flat 
+        // 1 go to percentage
+        mapping(uint => uint) public discounts;
     }
 
     mapping(address => Restaurant) public restaurants;

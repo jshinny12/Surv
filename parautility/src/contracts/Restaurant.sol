@@ -11,6 +11,7 @@ contract IDonations {
     function getRaised(address _restaurant, address _customer) external view returns (uint){}
 }
 
+
 contract Restaurant is ERC721Enumerable, Ownable {
     using Strings for uint256;
     using SafeMath for uint256;
