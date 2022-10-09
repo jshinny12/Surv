@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
 import emailjs from "@emailjs/browser";
+import {ReactSession} from "react-client-session";
 
 async function sha256(message) {
     // encode as UTF-8
@@ -57,6 +58,34 @@ const VerifySignup = () => {
             });
     };
 
+    const getUserByEmail = async (query_person) => {
+        const response = await fetch(`http://localhost:5000/user-by-email`, {
+            method: "POST", headers: { "Content-Type": "application/json"}, body: JSON.stringify(query_person)
+        });
+
+        const user = await response.json();
+        console.log(user);
+        return user;
+    }
+
+    const setUserPassword = async (salt, pw_hash, email) => {
+        console.log(salt);
+        console.log(pw_hash);
+        console.log(email);
+        const response = await fetch("http://localhost:5000/set-password", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({pw_hash: pw_hash, salt: salt, email: email})
+        })
+            .catch(error => {
+                alert(error);
+                return;
+            });
+
+    }
+
     // This function will handle the submission.
     async function onSubmit(e) {
         e.preventDefault();
@@ -72,36 +101,8 @@ const VerifySignup = () => {
         console.log(currentPerson);
         console.log(currentPerson.token);
 
-        const getUserTokenByEmail = async () => {
-            const response = await fetch(`http://localhost:5000/user-by-email`, {
-                method: "POST", headers: { "Content-Type": "application/json"}, body: JSON.stringify(currentPerson)
-            });
-
-            const user = await response.json();
-            console.log(user);
-            console.log(user.token);
-            return user.token;
-        }
-
-        const setUserPassword = async (salt, pw_hash, email) => {
-            console.log(salt);
-            console.log(pw_hash);
-            console.log(email);
-            const response = await fetch("http://localhost:5000/set-password", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({pw_hash: pw_hash, salt: salt, email: email})
-            })
-                .catch(error => {
-                    alert(error);
-                    return;
-                });
-        }
-
-        const salt = await getUserTokenByEmail().then(db_token => {
-            console.log(db_token)
+        const user_results = await getUserByEmail(currentPerson).then(db_person => {
+            const db_token = db_person.token
             console.log(currentPerson.token)
             if (db_token !== currentPerson.token) {
                 console.log("Token mismatch");
@@ -110,18 +111,34 @@ const VerifySignup = () => {
             }
 
             const salt = generateSalt(16);
-            return salt;
+            return {
+                user_salt: salt,
+                db_person: db_person
+            };
         });
 
-
+        const salt = user_results.user_salt;
+        const db_person = user_results.db_person;
         const pw_hash = await sha256(form.password1 + salt);
         console.log(pw_hash);
         console.log(salt);
 
-        const password_set = await setUserPassword(salt, pw_hash, currentPerson.email);
+        ReactSession.set("fname", db_person.fname);
+        ReactSession.set("lname", db_person.lname);
+        ReactSession.set("role", db_person.role);
+        ReactSession.set("email", db_person.email);
+        ReactSession.set("user_id", db_person._id);
+
+        const password_set = await setUserPassword(salt, pw_hash, currentPerson.email).then(response => {
+            if (ReactSession.get("role") === "merchant") {
+                navigate("/merchant-verify-landing");
+            }
+            else {
+                navigate("/login-landing");
+            }
+        });
 
         // setForm({email: "", token: "", password1: "", password2: ""});
-        navigate("/login");
     }
 
     // This following section will display the form that takes the input from the user.

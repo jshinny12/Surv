@@ -76,22 +76,22 @@ const SignupAdmin = () => {
             window.alert("Invalid Admin Code. Please Correct and Try Again")
         }
 
-        const new_token = generateToken(28)
-        console.log(new_token)
+        const new_token = generateToken(28);
+        console.log(new_token);
 
         var emailParams = {
             fname: form.fname,
             lname: form.lname,
             email: form.email,
             token: new_token
-        }
+        };
 
-        sendEmail(e, emailParams)
+        sendEmail(e, emailParams);
 
         // When a post request is sent to the create url, we'll add a new record to the database.
         const newPerson = { ...form };
         newPerson.token = new_token;
-        console.log(newPerson.token)
+        console.log(newPerson.token);
 
         await fetch("http://localhost:5000/signup-admin", {
             method: "POST",
@@ -167,7 +167,7 @@ const SignupAdmin = () => {
                 <div className="form-group">
                     <input
                         type="submit"
-                        value="Create person"
+                        value="Sign Up as Admin"
                         className="btn btn-primary"
                     />
                 </div>

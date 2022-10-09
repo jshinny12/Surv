@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import emailjs from "@emailjs/browser";
 
 export default function SignupAdmin() {
     const [form, setForm] = useState({
@@ -27,6 +28,29 @@ export default function SignupAdmin() {
         return /([0-9]{3})-([0-9]{3})-([0-9]{4})/.test(phone);
     }
 
+    function generateToken(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
+
+    const sendEmail = (e, templateParams) => {
+        e.preventDefault();
+
+        emailjs.init('Yhbs32kTTPFzp9TMU')
+        emailjs.send('service_7xjki0g', 'template_gke6mby', templateParams)
+            .then((result) => {
+                console.log(result.text);
+            }, (error) => {
+                console.log(error.text);
+            });
+    };
+
     // This function will handle the submission.
     async function onSubmit(e) {
         e.preventDefault();
@@ -39,8 +63,23 @@ export default function SignupAdmin() {
             window.alert("Invalid Phone Number Format. Please Correct and Try Again")
         }
 
+        const new_token = generateToken(28);
+        console.log(new_token);
+
+        var emailParams = {
+            fname: form.fname,
+            lname: form.lname,
+            email: form.email,
+            token: new_token
+        };
+
+        sendEmail(e, emailParams);
+
+
         // When a post request is sent to the create url, we'll add a new record to the database.
         const newPerson = { ...form };
+        newPerson.token = new_token;
+        console.log(newPerson.token);
 
         await fetch("http://localhost:5000/signup-customer", {
             method: "POST",

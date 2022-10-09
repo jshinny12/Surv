@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
 import emailjs from "@emailjs/browser";
+import {ReactSession} from "react-client-session";
 
 async function sha256(message) {
     // encode as UTF-8
@@ -65,15 +66,19 @@ const VerifySignup = () => {
             return user;
         }
 
-        const stored_pw = await getUserByEmail().then(user => {
-            return {stored_salt: user.salt, stored_hash: user.pw_hash};
+        const db_user = await getUserByEmail().then(user => {
+            return user;
         });
 
-        const pw_hash = await sha256(form.password + stored_pw.stored_salt);
+        const pw_hash = await sha256(form.password + db_user.salt);
         console.log("Checking Hash:" + pw_hash);
-        console.log("Stored Hash:" + stored_pw.stored_hash)
+        console.log("Stored Hash:" + db_user.pw_hash);
 
-        if (pw_hash === stored_pw.stored_hash) {
+        ReactSession.set("fname", db_user.fname);
+        ReactSession.set("lname", db_user.lname);
+        ReactSession.set("role", db_user.role);
+
+        if (pw_hash === db_user.pw_hash) {
             navigate("/login-landing");
         }
         else {
