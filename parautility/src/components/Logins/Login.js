@@ -90,7 +90,7 @@ const VerifySignup = () => {
     // This following section will display the form that takes the input from the user.
     return (
         <div>
-            <h3>Log In to your Tradim Account</h3>
+            <h3>Sign In</h3>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
@@ -121,6 +121,7 @@ const VerifySignup = () => {
                 </div>
             </form>
         </div>
+
     );
 }
 

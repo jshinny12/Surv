@@ -56,7 +56,7 @@ const AboutEach = () => {
                     <Image 
                     style = {imageStyle}
                             src=
-                    {require("../assets/Aidan.jpeg")}
+                    {require("../../assets/Aidan.jpeg")}
                             roundCircle
                         />
                     </div>
@@ -75,7 +75,7 @@ const AboutEach = () => {
                     <Image
                     style = {imageStyle}
                             src=
-                    {require("../assets/Vincent.jpeg")}
+                    {require("../../assets/Vincent.jpeg")}
                             roundCircle
                         />
                     </div>
@@ -89,7 +89,7 @@ const AboutEach = () => {
                     <Image
                     style = {imageStyle}
                             src=
-                    {require("../assets/joey.jpeg")}
+                    {require("../../assets/joey.jpeg")}
                             roundCircle
                         />
                     </div>

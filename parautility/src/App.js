@@ -1,29 +1,28 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Navbar from "./components/NavBar";
-import About from "./components/About";
+import Navbar from "./components/Navbars/NavBar";
+import About from "./components/Abouts/About";
 import Customer from "./components/Customer";
-import Company from "./components/Company";
-import Home from './components/Home';
+import Company from "./components/Companies/Company";
+import Home from './components/Home/Home';
 import { Button, Box } from '@mui/material';
-import Bottom from "./components/Bottom";
+import Bottom from "./components/Footer/Bottom";
 import {useState} from 'react';
-import Login from './components/Login'
+import Login from './components/Logins/Login'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
-import Contact from "./components/Contact";
 import RecordList from "./components/RecordList";
 import Edit from "./components/Edit";
 import Create from "./components/Create";
-import SignupAdmin from "./components/SignupAdmin";
-import SignupCustomer from "./components/SignupCustomer";
-import SignupMerchant from "./components/SignupMerchant";
+import SignupAdmin from "./components/Signups/SignupAdmin";
+import SignupCustomer from "./components/Signups/SignupCustomer";
+import SignupMerchant from "./components/Signups/SignupMerchant";
 import UserList from "./components/UserList";
-import VerifySignup from "./components/VerifySignup";
-import LoginLanding from "./components/LoginLanding";
-import MerchantVerifyLanding from "./components/MerchantVerifyLanding";
-import CompanySetup from "./components/CompanySetup";
-import CompanyJoin from "./components/CompanyJoin";
+import VerifySignup from "./components/Signups/VerifySignup";
+import LoginLanding from "./components/Logins/LoginLanding";
+import MerchantVerifyLanding from "./components/Logins/MerchantVerifyLanding";
+import CompanySetup from "./components/Companies/CompanySetup";
+import CompanyJoin from "./components/Companies/CompanyJoin";
 
 
 function App() {
