@@ -18,7 +18,7 @@ async function sha256(message) {
     return hashHex;
 }
 
-const VerifySignup = () => {
+const Login = () => {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -124,4 +124,4 @@ const VerifySignup = () => {
     );
 }
 
-export default VerifySignup
+export default Login
