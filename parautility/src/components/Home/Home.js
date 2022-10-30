@@ -3,8 +3,6 @@ import {Carousel} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home2 from './Home2'
 
-
-
 const Home = () => {
     const contentStyle = {
         height: '750px',

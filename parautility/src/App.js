@@ -1,29 +1,30 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Navbar from "./components/NavBar";
-import About from "./components/About";
-import Customer from "./components/Customer";
-import Company from "./components/Company";
-import Home from './components/Home';
+import Navbar from "./components/Navbars/NavBar";
+import About from "./components/Abouts/About";
+import Customer from "./components/Customers/Customer";
+import Company from "./components/Companies/Company";
+import Home from './components/Home/Home';
 import { Button, Box } from '@mui/material';
-import Bottom from "./components/Bottom";
+import Bottom from "./components/Footer/Bottom";
 import {useState} from 'react';
-import Login from './components/Login'
+import Login from './components/Users/Logins/Login'
+import OldLogin from './components/Users/Logins/OldLogin'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
-import Contact from "./components/Contact";
-import RecordList from "./components/RecordList";
-import Edit from "./components/Edit";
-import Create from "./components/Create";
-import SignupAdmin from "./components/SignupAdmin";
-import SignupCustomer from "./components/SignupCustomer";
-import SignupMerchant from "./components/SignupMerchant";
-import UserList from "./components/UserList";
-import VerifySignup from "./components/VerifySignup";
-import LoginLanding from "./components/LoginLanding";
-import MerchantVerifyLanding from "./components/MerchantVerifyLanding";
-import CompanySetup from "./components/CompanySetup";
-import CompanyJoin from "./components/CompanyJoin";
+import RecordList from "./components/Record/RecordList";
+import Edit from "./components/Record/Edit";
+import Create from "./components/Record/Create";
+import Signup from "./components/Users/Signups/Signup";
+import SignupAdmin from "./components/Users/Signups/SignupAdmin";
+import SignupCustomer from "./components/Users/Signups/SignupCustomer";
+import SignupMerchant from "./components/Users/Signups/SignupMerchant";
+import UserList from "./components/Users/UserList";
+import VerifySignup from "./components/Users/Signups/VerifySignup";
+import LoginLanding from "./components/Users/Logins/LoginLanding";
+import MerchantVerifyLanding from "./components/Users/Logins/MerchantVerifyLanding";
+import CompanySetup from "./components/Companies/CompanySetup";
+import CompanyJoin from "./components/Companies/CompanyJoin";
 
 
 function App() {
@@ -85,7 +86,7 @@ function App() {
                 <Route path="/about" element={<About/>}/>
                 <Route path="/customer" element={<Customer/>}/>
                 <Route path="/company" element={<Company/>}/>
-                <Route path="/login" element={<Login/>}/>
+                <Route path="/login" element={<OldLogin/>}/>
                 <Route exact path="/records" element={<RecordList />} />
                 <Route path="/edit/:id" element={<Edit />} />
                 <Route path="/create" element={<Create />} />
@@ -98,6 +99,8 @@ function App() {
                 <Route exact path="/merchant-verify-landing" element={<MerchantVerifyLanding />} />
                 <Route exact path="/company-setup" element={<CompanySetup />} />
                 <Route exact path="/company-join" element={<CompanyJoin />} />
+                <Route exact path="/signup" element={<Signup />} />
+
             </Routes>
             <Bottom />
         </div>
