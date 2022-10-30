@@ -46,6 +46,7 @@ companyRoutes.route("/setup-company").post(function (req, response) {
 companyRoutes.route("/create-discounts").post(function (req, response) {
     console.log("attempting to create new discounts")
     let db_connect = dbo.getDb("tradim");
+    console.log(req.body.expire);
 
     const discounts = [];
     for (let i = 0; i < req.body.count; i++) {
@@ -53,7 +54,8 @@ companyRoutes.route("/create-discounts").post(function (req, response) {
             nickname: req.body.nickname,
             company_id: ObjectId(req.body.company_id),
             percent: req.body.percent,
-            is_outstanding: 1
+            is_outstanding: 1,
+            expiration_date: new Date(req.body.expire)
         }
     }
 

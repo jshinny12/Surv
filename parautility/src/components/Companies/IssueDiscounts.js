@@ -8,8 +8,9 @@ const IssueDiscounts = () => {
 
     const [form, setForm] = useState({
         nickname: "",
-        percent: "0",
-        count: "0"
+        percent: 0,
+        count: 0,
+        expire: Date()
     });
 
     // These methods will update the state properties.
@@ -54,7 +55,7 @@ const IssueDiscounts = () => {
                 return;
             });
 
-        setForm({ nickname: "", percent: "0", count: "0" });
+        setForm({ nickname: "", percent: "0", count: "0", expire: Date()});
         navigate("/my-company");
     }
 
@@ -91,6 +92,16 @@ const IssueDiscounts = () => {
                         id="count"
                         value={form.count}
                         onChange={(e) => updateForm({ count: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="expire">Expiration Date</label>
+                    <input
+                        type="date"
+                        className="form-control"
+                        id="expire"
+                        value={form.expire}
+                        onChange={(e) => updateForm({ expire: e.target.value })}
                     />
                 </div>
                 <div className="form-group">

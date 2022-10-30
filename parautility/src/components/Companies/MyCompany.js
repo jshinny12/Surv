@@ -33,8 +33,9 @@ const Company = (props) => (
 
 const DiscountGroup = (props) => (
         <tr>
-            <td>{props.discount._id}</td>
-            <td>{props.discount.percent_discount}</td>
+            <td>{props.discount._id.nickname}</td>
+            <td>{props.discount._id.expiration}</td>
+            <td>{props.discount._id.percent}%</td>
             <td>{props.discount.group_count}</td>
             <td>{props.discount.number_outstanding}</td>
             <td>{props.discount.group_count - props.discount.number_outstanding}</td>
@@ -98,7 +99,7 @@ export default function MyCompany() {
             return (
                 <DiscountGroup
                     discount={discount}
-                    key={discount._id}
+                    key={discount._id.nickname}
                 />
             );
         });
@@ -121,6 +122,7 @@ export default function MyCompany() {
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                 <th>Discount Nickname</th>
+                <th>Expiration Date</th>
                 <th>Percent Discount</th>
                 <th>Number Issued</th>
                 <th>Number Outstanding</th>

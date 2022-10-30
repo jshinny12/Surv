@@ -24,11 +24,14 @@ discountRoutes.route("/discounts/:company_id").get(async function (req, res) {
 
             {
                 $group: {
-                    _id: "$nickname",
+                    _id: {"nickname": "$nickname", "percent": "$percent", "expiration": "$expiration_date"},
                     group_count: {$count: {}},
-                    number_outstanding: {$sum: "$is_outstanding"},
-                    percent_discount: {$avg: "$percent"}
+                    number_outstanding: {$sum: "$is_outstanding"}
                     }
+            },
+
+            {
+                $sort: { _id: 1}
             }
         ]);
 
