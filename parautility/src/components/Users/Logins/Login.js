@@ -33,26 +33,9 @@ const Login = () => {
         });
     }
 
-    const sendEmail = (e, templateParams) => {
-        e.preventDefault();
-
-        emailjs.init('Yhbs32kTTPFzp9TMU')
-        emailjs.send('service_7xjki0g', 'template_gke6mby', templateParams)
-            .then((result) => {
-                console.log(result.text);
-            }, (error) => {
-                console.log(error.text);
-            });
-    };
-
     // This function will handle the submission.
     async function onSubmit(e) {
         e.preventDefault();
-
-        if (form.password1 !== form.password2) {
-            alert("Passwords do not match. Please Try Again");
-            return;
-        }
 
         // When a post request is sent to the "create" url, we'll add a new record to the database.
         const currentPerson = {...form};
@@ -77,6 +60,14 @@ const Login = () => {
         ReactSession.set("fname", db_user.fname);
         ReactSession.set("lname", db_user.lname);
         ReactSession.set("role", db_user.role);
+
+        localStorage.setItem("fname", db_user.fname);
+        localStorage.setItem("lname", db_user.lname);
+        localStorage.setItem("role", db_user.role);
+
+        if (db_user.role === "merchant") {
+            localStorage.setItem("company_id", db_user.company_id);
+        }
 
         if (pw_hash === db_user.pw_hash) {
             navigate("/login-landing");

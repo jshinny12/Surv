@@ -9,6 +9,7 @@ app.use(express.json());
 const dbo = require("./db/conn");
 app.use(require("./routes/user"));
 app.use(require("./routes/company"));
+app.use(require("./routes/discount"));
 
 app.listen(port, () => {
     // perform a database connection when server starts

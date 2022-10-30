@@ -42,6 +42,41 @@ companyRoutes.route("/setup-company").post(function (req, response) {
         });
 });
 
+// This section will help you create a new record.
+companyRoutes.route("/create-discounts").post(function (req, response) {
+    console.log("attempting to create new discounts")
+    let db_connect = dbo.getDb("tradim");
+
+    const discounts = [];
+    for (let i = 0; i < req.body.count; i++) {
+        discounts[i] = {
+            nickname: req.body.nickname,
+            company_id: ObjectId(req.body.company_id),
+            percent: req.body.percent,
+            is_outstanding: 1
+        }
+    }
+
+    db_connect.collection("discounts").insertMany(discounts, function (err, res) {
+        if (err) throw err;
+    });
+
+    let discount_table_ids = discounts.map(get_discount_id);
+
+    function get_discount_id(discount) {
+        return ObjectId(discount._id);
+    }
+
+    db_connect.collection("companies").updateOne(
+        {_id: ObjectId(req.body.company_id)},
+        {$push: {discounts: { $each: discount_table_ids}}},
+        function (err, res) {
+            if (err) throw err;
+            console.log("discounts added to company");
+            response.json(res)
+        });
+});
+
 // This section will help you get a list of all the records.
 companyRoutes.route("/company").get(function (req, res) {
     let db_connect = dbo.getDb("tradim");
