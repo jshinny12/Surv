@@ -53,7 +53,9 @@ companyRoutes.route("/create-discounts").post(function (req, response) {
         discounts[i] = {
             nickname: req.body.nickname,
             company_id: ObjectId(req.body.company_id),
+            company_name: req.body.company_name,
             percent: req.body.percent,
+            price: req.body.price,
             is_outstanding: 1,
             expiration_date: new Date(req.body.expire)
         }

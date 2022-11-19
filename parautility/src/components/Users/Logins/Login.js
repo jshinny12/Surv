@@ -56,6 +56,7 @@ const Login = () => {
         const pw_hash = await sha256(form.password + db_user.salt);
         console.log("Checking Hash:" + pw_hash);
         console.log("Stored Hash:" + db_user.pw_hash);
+        console.log(db_user.role);
 
         ReactSession.set("fname", db_user.fname);
         ReactSession.set("lname", db_user.lname);

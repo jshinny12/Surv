@@ -1,6 +1,5 @@
 import React from 'react'
 import {useState} from 'react'
-import {Nav} from "react-bootstrap";
 
 const Customer = () => {
     const[cards, setCards] = useState([]);
@@ -24,12 +23,9 @@ const Customer = () => {
 
     return (
       <>
-          <div style = {contentStyle}>
-              <h1 style = {paragraphStyle}>My Discounts</h1>
-          </div>
-          <div>
-             <Nav.Link href="/discounts" style = {{color: 'black'}} onClick = {console.log("navigate to discounts")}>Browse Discounts</Nav.Link>
-          </div>
+        <div style = {contentStyle}>
+              <h1 style = {paragraphStyle}> Meet the Team </h1>
+        </div>
       </>
     )
 }

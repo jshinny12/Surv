@@ -10,6 +10,7 @@ const IssueDiscounts = () => {
         nickname: "",
         percent: 0,
         count: 0,
+        price: 0,
         expire: Date()
     });
 
@@ -41,6 +42,8 @@ const IssueDiscounts = () => {
         // When a post request is sent to the create url, we'll add a new record to the database.
         const discounts = { ...form };
         discounts.company_id = localStorage.getItem("company_id");
+        discounts.company_name = localStorage.getItem("company");
+        console.log(discounts.company_id);
         discounts.percent = Number(discounts.percent);
 
         await fetch("http://localhost:5000/create-discounts", {
@@ -92,6 +95,16 @@ const IssueDiscounts = () => {
                         id="count"
                         value={form.count}
                         onChange={(e) => updateForm({ count: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="count">Initial Offer Price</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="price"
+                        value={form.price}
+                        onChange={(e) => updateForm({ price: e.target.value })}
                     />
                 </div>
                 <div className="form-group">

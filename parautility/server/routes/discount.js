@@ -24,7 +24,7 @@ discountRoutes.route("/discounts/:company_id").get(async function (req, res) {
 
             {
                 $group: {
-                    _id: {"nickname": "$nickname", "percent": "$percent", "expiration": "$expiration_date"},
+                    _id: {"nickname": "$nickname", "percent": "$percent", "expiration": "$expiration_date", "price": "$price"},
                     group_count: {$count: {}},
                     number_outstanding: {$sum: "$is_outstanding"}
                     }
@@ -37,6 +37,48 @@ discountRoutes.route("/discounts/:company_id").get(async function (req, res) {
 
     const results = await aggCursor.toArray();
     res.json(results);
+});
+
+discountRoutes.route("/customer-discounts").get(async function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+
+    console.log("Pulling available discounts");
+    const aggCursor = db_connect.collection("discounts").aggregate([
+        {
+            $group: {
+                _id: {"company": "$company_name", "nickname": "$nickname", "percent": "$percent", "expiration": "$expiration_date", "price": "$price"}
+            }
+        },
+
+        {
+            $sort: { _id: 1}
+        }
+    ]);
+
+    const results = await aggCursor.toArray();
+    res.json(results);
+});
+
+discountRoutes.route("/get-available-discount").post(async function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+
+    console.log("Finding one discount ID");
+    db_connect.collection("discounts").findOne(
+        {company_name: req.body.company_name, nickname: req.body.discount_nickname, is_outstanding: 1}, function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
+// This section will help you get a single record by id
+discountRoutes.route("/discount/:id").get(function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("discounts").findOne(myquery,
+        function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
 });
 
 module.exports = discountRoutes;

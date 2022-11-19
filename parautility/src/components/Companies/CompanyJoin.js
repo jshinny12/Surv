@@ -105,7 +105,8 @@ export default function CompanyJoin() {
         });
 
         console.log(company_results);
-        ReactSession.set("company", company_results.name);
+        localStorage.setItem("company", company_results.name);
+        localStorage.setItem("company_id", company_results._id);
 
         const update_params = {company_id: company_results._id, user_id: ReactSession.get("user_id")}
 

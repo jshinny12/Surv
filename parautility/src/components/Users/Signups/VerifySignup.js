@@ -123,14 +123,14 @@ const VerifySignup = () => {
         console.log(pw_hash);
         console.log(salt);
 
-        ReactSession.set("fname", db_person.fname);
-        ReactSession.set("lname", db_person.lname);
-        ReactSession.set("role", db_person.role);
-        ReactSession.set("email", db_person.email);
-        ReactSession.set("user_id", db_person._id);
+        localStorage.setItem("fname", db_person.fname);
+        localStorage.setItem("lname", db_person.lname);
+        localStorage.setItem("role", db_person.role);
+        localStorage.setItem("email", db_person.email);
+        localStorage.setItem("user_id", db_person._id);
 
         const password_set = await setUserPassword(salt, pw_hash, currentPerson.email).then(response => {
-            if (ReactSession.get("role") === "merchant") {
+            if (localStorage.getItem("role") === "merchant") {
                 navigate("/merchant-verify-landing");
             }
             else {

@@ -9,7 +9,7 @@ const Header = () => {
     };
 
     const stored_role = localStorage.getItem("role");
-    console.log();
+    console.log(stored_role);
 
     return (
        
@@ -22,7 +22,7 @@ const Header = () => {
                     <Nav className="justify-content-end flex-grow-1 pe-5">
                     <Nav.Link href="/" style = {{color: 'white'}}>Home</Nav.Link>
                     {stored_role === "merchant" ? <Nav.Link href="/my-company" style = {{color: 'white'}}>My Company</Nav.Link> : <></>}
-                    {stored_role === "customer" ? <Nav.Link href="/customer" style = {{color: 'white'}}>Customers</Nav.Link> : <></>}
+                    {stored_role === "customer" ? <Nav.Link href="/customer" style = {{color: 'white'}}>My Wallet</Nav.Link> : <></>}
                     <Nav.Link href="/about" style = {{color: 'white'}} onClick = {console.log("hello")}>About</Nav.Link>
                     <Nav.Link href="/login" style = {{color: 'white'}}>Login</Nav.Link>
                     {stored_role === "admin" ? <Nav.Link href="/create" style = {{color: 'white', border: '1px solid white'}}>Create Record</Nav.Link> : <></>}
