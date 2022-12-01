@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import emailjs from "@emailjs/browser"
-import {ReactSession} from "react-client-session";
 
 const IssueDiscounts = () => {
     const navigate = useNavigate();

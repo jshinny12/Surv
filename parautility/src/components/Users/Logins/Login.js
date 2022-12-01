@@ -58,13 +58,10 @@ const Login = () => {
         console.log("Stored Hash:" + db_user.pw_hash);
         console.log(db_user.role);
 
-        ReactSession.set("fname", db_user.fname);
-        ReactSession.set("lname", db_user.lname);
-        ReactSession.set("role", db_user.role);
-
         localStorage.setItem("fname", db_user.fname);
         localStorage.setItem("lname", db_user.lname);
         localStorage.setItem("role", db_user.role);
+        localStorage.setItem("user_id", db_user._id);
 
         if (db_user.role === "merchant") {
             localStorage.setItem("company_id", db_user.company_id);

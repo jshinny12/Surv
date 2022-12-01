@@ -23,11 +23,11 @@ const TransactionInfo = (props) => (
     </>
 );
 
-export default function Transaction() {
+export default function TransactionSell() {
     const [discounts, setDiscounts] = useState([]);
     const navigate = useNavigate();
 
-    const current_id = localStorage.getItem("transaction_discount_id");
+    const current_id = localStorage.getItem("discount_sell_id");
     console.log(current_id);
 
     useEffect( () => {
@@ -49,7 +49,6 @@ export default function Transaction() {
 
 
 
-    // This method will map out the users on the table
     function discountInfo() {
         console.log(discounts);
         return discounts.map((discount) => {
@@ -62,15 +61,38 @@ export default function Transaction() {
         });
     }
 
+    async function confirmTransaction() {
+        const transaction_info = {
+            discount_id: localStorage.getItem("discount_sell_id"),
+            seller_id: localStorage.getItem("user_id")
+        };
+
+        console.log(transaction_info)
+
+        await fetch("http://localhost:5000/sell-discount", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(transaction_info),
+        })
+            .catch(error => {
+                window.alert(error);
+                return;
+            });
+
+        navigate("/customer");
+    }
+
     // This following section will display the table with the users of individuals.
     return (
         <div>
-            <h3>Pending Transaction</h3>
+            <h3>Pending Sale</h3>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <tbody>{discountInfo()}</tbody>
             </table>
-            <button onClick={() => {navigate("/customer");}}>Confirm</button>
-            <button onClick={() => {navigate("/discounts");}}>Cancel</button>
+            <button onClick={() => confirmTransaction()}>Confirm</button>
+            <button onClick={() => {navigate("/customer");}}>Cancel</button>
         </div>
     );
 }

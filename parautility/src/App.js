@@ -28,7 +28,8 @@ import CompanyJoin from "./components/Companies/CompanyJoin";
 import MyCompany from "./components/Companies/MyCompany";
 import IssueDiscounts from "./components/Companies/IssueDiscounts";
 import BrowseDiscounts from "./components/Customers/BrowseDiscounts";
-import Transaction from "./components/Customers/Transaction";
+import TransactionBuy from "./components/Customers/TransactionBuy";
+import TransactionSell from "./components/Customers/TransactionSell";
 
 
 function App() {
@@ -107,7 +108,8 @@ function App() {
                 <Route exact path="/company-join" element={<CompanyJoin />} />
                 <Route exact path="/signup" element={<Signup />} />
                 <Route exact path="/discounts" element={<BrowseDiscounts />} />
-                <Route exact path="/transaction" element={<Transaction />} />
+                <Route exact path="/transaction" element={<TransactionBuy />} />
+                <Route exact path="/confirm-sell" element={<TransactionSell />} />
 
             </Routes>
             <Bottom />

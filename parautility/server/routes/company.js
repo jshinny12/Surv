@@ -56,7 +56,7 @@ companyRoutes.route("/create-discounts").post(function (req, response) {
             company_name: req.body.company_name,
             percent: req.body.percent,
             price: req.body.price,
-            is_outstanding: 1,
+            is_for_sale: 0,
             expiration_date: new Date(req.body.expire)
         }
     }

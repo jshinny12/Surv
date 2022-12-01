@@ -45,6 +45,10 @@ discountRoutes.route("/customer-discounts").get(async function (req, res) {
     console.log("Pulling available discounts");
     const aggCursor = db_connect.collection("discounts").aggregate([
         {
+            $match: {is_for_sale: 1}
+        },
+
+        {
             $group: {
                 _id: {"company": "$company_name", "nickname": "$nickname", "percent": "$percent", "expiration": "$expiration_date", "price": "$price"}
             }
@@ -59,12 +63,30 @@ discountRoutes.route("/customer-discounts").get(async function (req, res) {
     res.json(results);
 });
 
+discountRoutes.route("/customer-wallet/:id").get(async function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+
+    console.log("Pulling customer's discounts");
+    const aggCursor = db_connect.collection("discounts").aggregate([
+        {
+            $match: {owner_id: req.params.id}
+        },
+
+        {
+            $sort: { company_name: 1}
+        }
+    ]);
+
+    const results = await aggCursor.toArray();
+    res.json(results);
+});
+
 discountRoutes.route("/get-available-discount").post(async function (req, res) {
     let db_connect = dbo.getDb("tradim");
 
     console.log("Finding one discount ID");
     db_connect.collection("discounts").findOne(
-        {company_name: req.body.company_name, nickname: req.body.discount_nickname, is_outstanding: 1}, function (err, result) {
+        {company_name: req.body.company_name, nickname: req.body.discount_nickname, is_for_sale: 1}, function (err, result) {
             if (err) throw err;
             res.json(result);
         });
