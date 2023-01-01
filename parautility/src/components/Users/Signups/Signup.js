@@ -15,7 +15,7 @@ const Signup = () => {
   };
   const onClickAdmin = event => {
     event.preventDefault();
-    navigate('/comapny-signup');
+    navigate('/admin-signup');
   };
 
   const contentStyle = {
@@ -59,7 +59,7 @@ const Signup = () => {
                 <div className="card">
                     <div className="card-body">
                         <h5 className="card-title">Admin Signup</h5>
-                        <p className="card-text">Click the button below to sign up as a admin.</p>
+                        <p className="card-text">Click the button below to sign up as an admin.</p>
                         <button className="btn btn-primary" onClick={onClickAdmin}>Admin Signup</button>
                     </div>
                 </div>

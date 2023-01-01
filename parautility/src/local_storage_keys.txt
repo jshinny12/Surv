@@ -1,0 +1,18 @@
+Admin-Side:
+view_company
+view_company_id
+
+Merchant-Side:
+company
+company_id
+
+Customer-Side:
+transaction_discount_id (for buying: starts as tentative)
+discount_sell_id
+
+All:
+fname
+lname
+email
+role
+user_id

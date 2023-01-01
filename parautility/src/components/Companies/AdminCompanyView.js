@@ -94,26 +94,14 @@ export default function AdminCompanyView() {
             const db_secret = db_company.secret_word;
             console.log(db_secret);
             console.log(form.secret_word);
-            if (db_secret !== form.secret_word) {
-                console.log("Secret Word Mismatch");
-                alert("Secret word does not match the one provided at company set up");
-                return;
-            }
-            else {
-                return db_company;
-            }
+            return db_company;
         });
 
         console.log(company_results);
-        localStorage.setItem("company", company_results.name);
-        localStorage.setItem("company_id", company_results._id);
+        localStorage.setItem("view_company", company_results.name);
+        localStorage.setItem("view_company_id", company_results._id);
 
-        const update_params = {company_id: company_results._id, user_id: ReactSession.get("user_id")}
-
-        const update_results = await addUserToCompany(update_params).then(db_company => {
-            navigate("/login-landing");
-        });
-
+        navigate("/admin-one-company-view");
     }
 
     // This following section will display the table with the users of individuals.
@@ -133,9 +121,7 @@ export default function AdminCompanyView() {
                     </thead>
                     <tbody>{companyList()}</tbody>
                 </table>
-                <label htmlFor={"secret_word"}>Secret Word to Join Your Company:</label>
-                <input type={"text"} id={"secret_word"} onChange={(e) => updateForm({ secret_word: e.target.value }) }  />
-                <input type={"submit"} value={"Join Selected Company"} />
+                <button onClick={onSubmit}>View Selected Company</button>
             </form>
         </div>
     );

@@ -61,6 +61,7 @@ const Login = () => {
         localStorage.setItem("fname", db_user.fname);
         localStorage.setItem("lname", db_user.lname);
         localStorage.setItem("role", db_user.role);
+        localStorage.setItem("email", db_user.email);
         localStorage.setItem("user_id", db_user._id);
 
         if (db_user.role === "merchant") {

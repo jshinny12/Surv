@@ -92,6 +92,7 @@ companyRoutes.route("/company").get(function (req, res) {
 });
 
 // This section will help you get a single record by id
+// TODO: add company owner/creator contact info with $lookup
 companyRoutes.route("/company/:id").get(function (req, res) {
     let db_connect = dbo.getDb("tradim");
     let myquery = { _id: ObjectId(req.params.id) };

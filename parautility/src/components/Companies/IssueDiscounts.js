@@ -40,8 +40,9 @@ const IssueDiscounts = () => {
 
         // When a post request is sent to the create url, we'll add a new record to the database.
         const discounts = { ...form };
-        discounts.company_id = localStorage.getItem("company_id");
-        discounts.company_name = localStorage.getItem("company");
+        discounts.company_id = localStorage.getItem("view_company_id");
+        discounts.company_name = localStorage.getItem("view_company");
+
         console.log(discounts.company_id);
         discounts.percent = Number(discounts.percent);
 
@@ -58,7 +59,7 @@ const IssueDiscounts = () => {
             });
 
         setForm({ nickname: "", percent: "0", count: "0", expire: Date()});
-        navigate("/my-company");
+        navigate("/admin-one-company-view");
     }
 
     // This following section will display the form that takes the input from the user.

@@ -11,7 +11,7 @@ const dbo = require("../db/conn");
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
-// This section will help you create a new record.
+// Sell a discount - put it up for sale. insert a transaction record and update a discount record
 transactionRoutes.route("/sell-discount").post(function (req, response) {
     console.log("attempting to add transaction")
     let db_connect = dbo.getDb("tradim");
@@ -35,7 +35,9 @@ transactionRoutes.route("/sell-discount").post(function (req, response) {
         });
 });
 
-// This section will help you create a new record.
+// Buy a discount - update a transaction record and a discount record
+// TODO: update the user record
+// TODO: add most recent transaction to each discount
 transactionRoutes.route("/buy-discount").post(function (req, response) {
     console.log("attempting to add transaction")
     let db_connect = dbo.getDb("tradim");

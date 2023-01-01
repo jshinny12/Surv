@@ -30,6 +30,8 @@ import IssueDiscounts from "./components/Companies/IssueDiscounts";
 import BrowseDiscounts from "./components/Customers/BrowseDiscounts";
 import TransactionBuy from "./components/Customers/TransactionBuy";
 import TransactionSell from "./components/Customers/TransactionSell";
+import AdminCompanyView from "./components/Companies/AdminCompanyView";
+import AdminSingleCompany from "./components/Companies/AdminSingleCompany";
 
 
 function App() {
@@ -110,6 +112,8 @@ function App() {
                 <Route exact path="/discounts" element={<BrowseDiscounts />} />
                 <Route exact path="/transaction" element={<TransactionBuy />} />
                 <Route exact path="/confirm-sell" element={<TransactionSell />} />
+                <Route exact path="/admin-company-list" element={<AdminCompanyView />} />
+                <Route exact path="/admin-one-company-view" element={<AdminSingleCompany />} />
 
             </Routes>
             <Bottom />

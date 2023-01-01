@@ -26,7 +26,8 @@ discountRoutes.route("/discounts/:company_id").get(async function (req, res) {
                 $group: {
                     _id: {"nickname": "$nickname", "percent": "$percent", "expiration": "$expiration_date", "price": "$price"},
                     group_count: {$count: {}},
-                    number_outstanding: {$sum: "$is_outstanding"}
+                    number_outstanding: {$sum: "$is_outstanding"},
+                    number_for_sale: {$sum: "$is_for_sale"}
                     }
             },
 
@@ -34,6 +35,9 @@ discountRoutes.route("/discounts/:company_id").get(async function (req, res) {
                 $sort: { _id: 1}
             }
         ]);
+
+    // TODO: add most recent transaction in to results
+    // TODO: add total number of transactions (completed/open)
 
     const results = await aggCursor.toArray();
     res.json(results);

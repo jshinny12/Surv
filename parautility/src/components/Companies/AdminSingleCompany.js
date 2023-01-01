@@ -17,16 +17,30 @@ const Company = (props) => (
         <td>State</td>
         <td>{props.company.state}</td>
     </tr>
-    <tr><td>Company Account Creator Email</td>
-        <td>{props.company.owner_email}</td>
+    <tr>
+        <td>Number of Employees with Tradim Accounts</td>
+        <td>{props.company.employees.length}</td>
     </tr>
+    <tr>
+        <td>Total Number of Discounts Issued</td>
+        <td>{typeof props.company.discounts === 'undefined' ? 0 : props.company.discounts.length}</td>
+    </tr>
+    </>
+);
+
+const Owner = (props) => (
+    <>
         <tr>
-            <td>Number of Employees with Tradim Accounts</td>
-            <td>{props.company.employees.length}</td>
+            <td>Full Name</td>
+            <td>{props.owner.fname} {props.owner.lname}</td>
         </tr>
         <tr>
-            <td>Total Number of Discounts Issued</td>
-            <td>{typeof props.company.discounts === 'undefined' ? 0 : props.company.discounts.length}</td>
+            <td>Email</td>
+            <td>{props.owner.email}</td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td>{props.owner.phone}</td>
         </tr>
     </>
 );
@@ -37,30 +51,34 @@ const DiscountGroup = (props) => (
             <td>{props.discount._id.expiration}</td>
             <td>{props.discount._id.percent}%</td>
             <td>${props.discount._id.price}</td>
+            <td>TODO: Preorders</td>
             <td>{props.discount.group_count}</td>
-            <td>{props.discount.number_outstanding}</td>
-            <td>{props.discount.group_count - props.discount.number_outstanding}</td>
+            <td>{props.discount.number_for_sale}</td>
+            <td>TODO: Most Recent Transaction</td>
+            <td>TODO: Total Completed Transactions</td>
         </tr>
 );
 
-export default function MyCompany() {
+export default function AdminSingleCompany() {
     const [companies, setCompanies] = useState([]);
     const [discounts, setDiscounts] = useState([]);
     const navigate = useNavigate();
 
-    const current_id = localStorage.getItem("company_id");
+    const current_id = localStorage.getItem("view_company_id");
+    const current_name = localStorage.getItem("view_company");
     console.log(current_id);
 
     useEffect( () => {
-        async function getCompany() {
+        async function getCompanyAndOwner() {
             const response = await fetch('http://localhost:5000/company/' + current_id, {
                 method: "GET"
             });
 
             const company = await response.json();
             console.log(company);
+            console.log(company.owner);
+
             setCompanies([company]);
-            return company;
         }
 
         async function getCompanyDiscounts() {
@@ -74,7 +92,11 @@ export default function MyCompany() {
             return discounts;
         }
 
-        getCompany();
+        async function getCompanyOwner(owner_id) {
+
+        }
+
+        getCompanyAndOwner();
         getCompanyDiscounts();
 
         return;
@@ -107,18 +129,16 @@ export default function MyCompany() {
     }
 
     // This function will handle the submission.
-    /*
     async function onSubmit(e) {
         e.preventDefault();
 
         navigate("/issue-discounts");
     }
-     */
 
     // This following section will display the table with the users of individuals.
     return (
         <div>
-            <h3>My Company</h3>
+            <h3>{localStorage.getItem("view_company")}</h3>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <tbody>{companyList()}</tbody>
             </table>
@@ -128,15 +148,16 @@ export default function MyCompany() {
                 <th>Expiration Date</th>
                 <th>Percent Discount</th>
                 <th>Price</th>
+                <th>Preorder Count</th>
                 <th>Number Issued</th>
-                <th>Number Outstanding</th>
-                <th>Number Held</th>
+                <th>Number Currently for Sale</th>
+                <th>Datetime of Most Recent Transaction</th>
                 </thead>
                 <tbody>{discountList()}</tbody>
             </table>
-            {/*<form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit}>
                 <input type="submit" value="Issue Discounts"/>
-            </form> */}
+            </form>
         </div>
     );
 }

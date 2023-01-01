@@ -25,8 +25,8 @@ const Header = () => {
                     {stored_role === "customer" ? <Nav.Link href="/customer" style = {{color: 'white'}}>My Wallet</Nav.Link> : <></>}
                     <Nav.Link href="/about" style = {{color: 'white'}} onClick = {console.log("hello")}>About</Nav.Link>
                     <Nav.Link href="/login" style = {{color: 'white'}}>Login</Nav.Link>
-                    {stored_role === "admin" ? <Nav.Link href="/create" style = {{color: 'white', border: '1px solid white'}}>Create Record</Nav.Link> : <></>}
                     {stored_role === "admin" ? <Nav.Link href="/users" style = {{color: 'white', border: '1px solid white'}}>View User Table</Nav.Link> : <></>}
+                    {stored_role === "admin" ? <Nav.Link href="/admin-company-list" style = {{color: 'white', border: '1px solid white'}}>View Company Table</Nav.Link> : <></>}
                     <Nav.Link href="/signup" style = {{color: 'white'}}>Signup</Nav.Link>
                 </Nav>
                 </Offcanvas.Body>
