@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {useNavigate} from "react-router";
-import {ReactSession} from "react-client-session";
 
 const Company = (props) => (
     <>
@@ -59,9 +58,20 @@ const DiscountGroup = (props) => (
         </tr>
 );
 
+const PreorderGroup = (props) => (
+    <tr>
+        <td>{props.preorder.nickname}</td>
+        <td>{props.preorder.expiration_date}</td>
+        <td>{props.preorder.percent}%</td>
+        <td>${props.preorder.price}</td>
+        <td>{props.preorder.preorder_users.length}</td>
+    </tr>
+);
+
 export default function AdminSingleCompany() {
     const [companies, setCompanies] = useState([]);
     const [discounts, setDiscounts] = useState([]);
+    const [preorders, setPreorders] = useState([]);
     const navigate = useNavigate();
 
     const current_id = localStorage.getItem("view_company_id");
@@ -86,10 +96,19 @@ export default function AdminSingleCompany() {
                 method: "GET"
             });
 
-            const discounts = await response.json();
-            console.log(discounts);
-            setDiscounts(discounts);
-            return discounts;
+            const db_discounts = await response.json();
+            console.log(db_discounts);
+            setDiscounts(db_discounts);
+        }
+
+        async function getCompanyDiscountPreorders() {
+            const response = await fetch('http://localhost:5000/preorders/' + current_id, {
+                method: "GET"
+            });
+
+            const db_preorders = await response.json();
+            console.log(db_preorders);
+            setPreorders(db_preorders);
         }
 
         async function getCompanyOwner(owner_id) {
@@ -98,6 +117,7 @@ export default function AdminSingleCompany() {
 
         getCompanyAndOwner();
         getCompanyDiscounts();
+        getCompanyDiscountPreorders();
 
         return;
         }, []);
@@ -128,8 +148,27 @@ export default function AdminSingleCompany() {
         });
     }
 
+    // This method will map out the users on the table
+    function preorderList() {
+        return preorders.map((preorder) => {
+            return (
+                <PreorderGroup
+                    preorder={preorder}
+                    key={preorder._id.nickname}
+                />
+            );
+        });
+    }
+
     // This function will handle the submission.
-    async function onSubmit(e) {
+    async function onSubmitPreorder(e) {
+        e.preventDefault();
+
+        navigate("/issue-discount-preorder");
+    }
+
+    // This function will handle the submission.
+    async function onSubmitIssue(e) {
         e.preventDefault();
 
         navigate("/issue-discounts");
@@ -142,6 +181,20 @@ export default function AdminSingleCompany() {
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <tbody>{companyList()}</tbody>
             </table>
+
+            <h3>Preorder-Stage Discounts</h3>
+            <table className="table table-striped" style={{ marginTop: 20 }}>
+                <thead>
+                <th>Discount Nickname</th>
+                <th>Expiration Date</th>
+                <th>Percent Discount</th>
+                <th>Price</th>
+                <th>Preorder Count</th>
+                </thead>
+                <tbody>{preorderList()}</tbody>
+            </table>
+
+            <h3>Issued Discounts</h3>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                 <th>Discount Nickname</th>
@@ -155,8 +208,10 @@ export default function AdminSingleCompany() {
                 </thead>
                 <tbody>{discountList()}</tbody>
             </table>
-            <form onSubmit={onSubmit}>
-                <input type="submit" value="Issue Discounts"/>
+
+            <form onSubmit={onSubmitPreorder}>
+                <input type="submit" value="Create Preorder"/>
+                <input type="submit" value="Issue Preordered Discounts"/>
             </form>
         </div>
     );

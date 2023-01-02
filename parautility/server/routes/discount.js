@@ -43,6 +43,28 @@ discountRoutes.route("/discounts/:company_id").get(async function (req, res) {
     res.json(results);
 });
 
+// This section will help you get a single record by id
+discountRoutes.route("/preorders/:company_id").get(async function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+    console.log("Aggregating company discounts");
+    console.log(req.params.company_id);
+    const aggCursor = db_connect.collection("preorders").aggregate([
+        {
+            $match: {company_id: ObjectId(req.params.company_id)}
+        },
+
+        {
+            $sort: { _id: 1}
+        }
+    ]);
+
+    // TODO: add most recent transaction in to results
+    // TODO: add total number of transactions (completed/open)
+
+    const results = await aggCursor.toArray();
+    res.json(results);
+});
+
 discountRoutes.route("/customer-discounts").get(async function (req, res) {
     let db_connect = dbo.getDb("tradim");
 

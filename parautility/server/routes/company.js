@@ -43,6 +43,30 @@ companyRoutes.route("/setup-company").post(function (req, response) {
 });
 
 // This section will help you create a new record.
+companyRoutes.route("/create-discount-preorder").post(function (req, response) {
+    console.log("attempting to create new discount type")
+
+    let db_connect = dbo.getDb("tradim");
+    console.log(req.body.expire);
+
+    let preorder = {
+        nickname: req.body.nickname,
+        company_id: ObjectId(req.body.company_id),
+        company_name: req.body.company_name,
+        percent: req.body.percent,
+        price: req.body.price,
+        expiration_date: new Date(req.body.expire),
+        preorder_users: []
+    };
+
+    db_connect.collection("preorders").insertOne(preorder, function (err, res) {
+        if (err) throw err;
+        response.json(res);
+    });
+
+});
+
+// This section will help you create a new record.
 companyRoutes.route("/create-discounts").post(function (req, response) {
     console.log("attempting to create new discounts")
     let db_connect = dbo.getDb("tradim");
@@ -71,6 +95,7 @@ companyRoutes.route("/create-discounts").post(function (req, response) {
         return ObjectId(discount._id);
     }
 
+    /*
     db_connect.collection("companies").updateOne(
         {_id: ObjectId(req.body.company_id)},
         {$push: {discounts: { $each: discount_table_ids}}},
@@ -79,6 +104,7 @@ companyRoutes.route("/create-discounts").post(function (req, response) {
             console.log("discounts added to company");
             response.json(res)
         });
+     */
 });
 
 // This section will help you get a list of all the records.

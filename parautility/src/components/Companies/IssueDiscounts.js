@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import emailjs from "@emailjs/browser"
+import emailjs from "@emailjs/browser";
 
 const IssueDiscounts = () => {
     const navigate = useNavigate();

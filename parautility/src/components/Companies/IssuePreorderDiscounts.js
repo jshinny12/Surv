@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import emailjs from "@emailjs/browser";
 
-const CompanySetup = () => {
+const IssuePreorderDiscounts = () => {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
-        name: "",
-        city: "",
-        state: "",
-        secret_word: ""
+        nickname: "",
+        percent: 0,
+        count: 0,
+        price: 0,
+        expire: Date()
     });
 
     // These methods will update the state properties.
@@ -35,83 +36,86 @@ const CompanySetup = () => {
     async function onSubmit(e) {
         e.preventDefault();
 
-        if (form.state.length !== 2) {
-            window.alert("Invalid Entry for State");
-            return;
-        }
-
         // sendEmail(e, emailParams);
 
         // When a post request is sent to the create url, we'll add a new record to the database.
-        const newCompany = { ...form };
-        newCompany.owner = ReactSession.get("user_id");
-        newCompany.owner_email = ReactSession.get("email");
+        const discounts = { ...form };
+        discounts.company_id = localStorage.getItem("view_company_id");
+        discounts.company_name = localStorage.getItem("view_company");
 
-        await fetch("http://localhost:5000/setup-company", {
+        console.log(discounts.company_id);
+        discounts.percent = Number(discounts.percent);
+        console.log("Percent set");
+
+        await fetch("http://localhost:5000/create-discount-preorder", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(newCompany),
+            body: JSON.stringify(discounts),
         })
             .catch(error => {
+                console.log("error?");
                 window.alert(error);
                 return;
             });
 
-        setForm({ name: "", state: "", city: "", secret_word: "" });
-        navigate("/");
+        console.log("fetch done");
+
+        setForm({ nickname: "", percent: "0", count: "0", expire: Date()});
+        console.log("Just before navigate");
+        navigate("/admin-one-company-view");
     }
 
     // This following section will display the form that takes the input from the user.
     return (
         <div>
-            <h3>Create New Admin Account</h3>
+            <h3>Issue New Discount Preorder</h3>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="name">Company Name</label>
+                    <label htmlFor="nickname">Discount Nickname</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="name"
-                        value={form.name}
-                        onChange={(e) => updateForm({ name: e.target.value })}
+                        id="nickname"
+                        value={form.nickname}
+                        onChange={(e) => updateForm({ nickname: e.target.value })}
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="city">City</label>
+                    <label htmlFor="percent">Percent Discount</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="city"
-                        value={form.city}
-                        onChange={(e) => updateForm({ city: e.target.value })}
+                        id="percent"
+                        value={form.percent}
+                        onChange={(e) => updateForm({ percent: e.target.value })}
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="state">Two-Letter State</label>
+                    <label htmlFor="count">Initial Offer Price</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="state"
-                        value={form.state}
-                        onChange={(e) => updateForm({ state: e.target.value })}
+                        id="price"
+                        value={form.price}
+                        onChange={(e) => updateForm({ price: e.target.value })}
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="secret-word">Secret Word for Other Employees to Join</label>
+                    <label htmlFor="expire">Expiration Date</label>
                     <input
-                        type="text"
+                        type="date"
                         className="form-control"
-                        id="secret-word"
-                        value={form.secret_word}
-                        onChange={(e) => updateForm({ secret_word: e.target.value })}
+                        id="expire"
+                        value={form.expire}
+                        onChange={(e) => updateForm({ expire: e.target.value })}
                     />
                 </div>
                 <div className="form-group">
                     <input
                         type="submit"
-                        value="Create Company"
+                        value="Create Discount Preorder"
                         className="btn btn-primary"
                     />
                 </div>
@@ -120,4 +124,4 @@ const CompanySetup = () => {
     );
 }
 
-export default CompanySetup
+export default IssuePreorderDiscounts;
