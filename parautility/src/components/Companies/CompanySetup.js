@@ -44,8 +44,8 @@ const CompanySetup = () => {
 
         // When a post request is sent to the create url, we'll add a new record to the database.
         const newCompany = { ...form };
-        newCompany.owner = ReactSession.get("user_id");
-        newCompany.owner_email = ReactSession.get("email");
+        newCompany.owner = localStorage.getItem("user_id");
+        newCompany.owner_email = localStorage.getItem("email");
 
         await fetch("http://localhost:5000/setup-company", {
             method: "POST",

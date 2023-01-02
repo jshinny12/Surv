@@ -107,7 +107,7 @@ export default function CompanyJoin() {
         localStorage.setItem("company", company_results.name);
         localStorage.setItem("company_id", company_results._id);
 
-        const update_params = {company_id: company_results._id, user_id: ReactSession.get("user_id")}
+        const update_params = {company_id: company_results._id, user_id: localStorage.getItem("user_id")}
 
         const update_results = await addUserToCompany(update_params).then(db_company => {
             navigate("/login-landing");

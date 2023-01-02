@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
 import emailjs from "@emailjs/browser";
-import {ReactSession} from "react-client-session";
 
 async function sha256(message) {
     // encode as UTF-8
