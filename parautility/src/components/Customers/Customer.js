@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react'
 import {Nav} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import {useNavigate} from "react-router";
-import {ReactSession} from "react-client-session";
 
 const Customer = () => {
     const[cards, setCards] = useState([]);
