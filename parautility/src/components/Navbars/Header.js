@@ -1,4 +1,3 @@
-import {ReactSession} from "react-client-session";
 import React from 'react'
 import { Navbar,  Nav,  Offcanvas, Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';

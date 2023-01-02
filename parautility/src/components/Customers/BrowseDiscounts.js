@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {useNavigate} from "react-router";
-import {ReactSession} from "react-client-session";
 
 export default function BrowseDiscounts() {
     const [discounts, setDiscounts] = useState([]);
