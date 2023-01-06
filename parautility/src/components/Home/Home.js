@@ -33,12 +33,7 @@ const Home = () => {
         </Carousel.Item>
         <Carousel.Item style = {contentStyle}>
             <Carousel.Caption style = {boxStyle}>
-            <h1>A novel approach in trading discounts</h1>
-            </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item style = {contentStyle}>
-            <Carousel.Caption style = {boxStyle}>
-            <h1>Securitized on the Blockchain</h1>
+            <h1>A Novel Approach in Trading Discounts</h1>
             </Carousel.Caption>
         </Carousel.Item>
         </Carousel>
