@@ -89,6 +89,16 @@ discountRoutes.route("/customer-discounts").get(async function (req, res) {
     res.json(results);
 });
 
+// This section will help you get a list of all the records.
+discountRoutes.route("/preorders").get(function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+    db_connect.collection("preorders").find({}).toArray(
+        function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
 discountRoutes.route("/customer-wallet/:id").get(async function (req, res) {
     let db_connect = dbo.getDb("tradim");
 
@@ -100,6 +110,33 @@ discountRoutes.route("/customer-wallet/:id").get(async function (req, res) {
 
         {
             $sort: { company_name: 1}
+        }
+    ]);
+
+    const results = await aggCursor.toArray();
+    res.json(results);
+});
+
+discountRoutes.route("/customer-preorders/:id").get(async function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+
+    console.log("Pulling customer's preorders");
+    const aggCursor = db_connect.collection("preorder_transactions").aggregate([
+        {
+            $match: {buyer_id: ObjectId(req.params.id), is_filled: 0}
+        },
+
+        {
+            $sort: { company_name: 1}
+        },
+
+        {
+            $lookup: {
+                from: "preorders",
+                localField: "preorder_id",
+                foreignField: "_id",
+                as: "preorder_info"
+            }
         }
     ]);
 
@@ -123,6 +160,17 @@ discountRoutes.route("/discount/:id").get(function (req, res) {
     let db_connect = dbo.getDb("tradim");
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect.collection("discounts").findOne(myquery,
+        function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
+// This section will help you get a single record by id
+discountRoutes.route("/preorder/:id").get(function (req, res) {
+    let db_connect = dbo.getDb("tradim");
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("preorders").findOne(myquery,
         function (err, result) {
             if (err) throw err;
             res.json(result);

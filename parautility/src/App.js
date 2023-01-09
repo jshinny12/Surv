@@ -33,6 +33,7 @@ import TransactionSell from "./components/Customers/TransactionSell";
 import AdminCompanyView from "./components/Companies/AdminCompanyView";
 import AdminSingleCompany from "./components/Companies/AdminSingleCompany";
 import IssuePreorderDiscounts from "./components/Companies/IssuePreorderDiscounts";
+import TransactionPreorder from "./components/Customers/TransactionPreorder";
 
 
 function App() {
@@ -114,6 +115,7 @@ function App() {
                 <Route exact path="/discounts" element={<BrowseDiscounts />} />
                 <Route exact path="/transaction" element={<TransactionBuy />} />
                 <Route exact path="/confirm-sell" element={<TransactionSell />} />
+                <Route exact path="/confirm-preorder" element={<TransactionPreorder />} />
                 <Route exact path="/admin-company-list" element={<AdminCompanyView />} />
                 <Route exact path="/admin-one-company-view" element={<AdminSingleCompany />} />
 

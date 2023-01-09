@@ -19,6 +19,7 @@ const Header = () => {
             <Navbar.Offcanvas placement="end">
             <Offcanvas.Body>
                     <Nav className="justify-content-end flex-grow-1 pe-5">
+                    <Nav.Link style = {{color: 'white'}}>Welcome, {localStorage.getItem("fname")}</Nav.Link>
                     <Nav.Link href="/" style = {{color: 'white'}}>Home</Nav.Link>
                     {stored_role === "merchant" ? <Nav.Link href="/my-company" style = {{color: 'white'}}>My Company</Nav.Link> : <></>}
                     {stored_role === "customer" ? <Nav.Link href="/customer" style = {{color: 'white'}}>My Wallet</Nav.Link> : <></>}

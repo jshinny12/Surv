@@ -1,6 +1,12 @@
 
 .App {
-  background-color: white;
+  background-color: black;
+  color: white;
+}
+
+body {
+  background-color: black;
+  color: white;
 }
 
 .Auth-form-container {
@@ -9,6 +15,10 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+}
+
+table {
+  background-color: white;
 }
 
 .Auth-form {
@@ -36,7 +46,8 @@
 label {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(34, 34, 34);
+  color: rgb(170, 170, 170);
+  background-color: black;
 }
 
 .light-f-o-o-t-e-r-4 {
@@ -45,7 +56,8 @@ label {
   justify-content: flex-start;
   align-items: center;
   padding: 107px 0px;
-  background-color: #181818;
+  background-color: black;
+  color: white;
 }
 .content {
   display: flex;
@@ -53,4 +65,8 @@ label {
   justify-content: flex-start;
   align-items: flex-start;
   gap: 199px;
+}
+
+nav.navbar {
+  position: static;
 }

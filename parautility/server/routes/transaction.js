@@ -59,4 +59,30 @@ transactionRoutes.route("/buy-discount").post(function (req, response) {
         });
 });
 
+transactionRoutes.route("/preorder-discount").post(function (req, response) {
+    console.log("attempting to add preorder")
+    let db_connect = dbo.getDb("tradim");
+
+    db_connect.collection("preorder_transactions").insertOne(
+        {
+            preorder_id: ObjectId(req.body.preorder_id),
+            buyer_id: ObjectId(req.body.buyer_id),
+            preorder_date: new Date(),
+            is_filled: 0
+        }
+        , function (err, res) {
+            console.log("preorder transaction recorded")
+            if (err) throw err;
+        });
+
+    db_connect.collection("preorders").updateOne(
+        {_id: ObjectId(req.body.preorder_id)},
+        {$push: {preorder_users: ObjectId(req.body.buyer_id)}},
+        function (err, res) {
+            if (err) throw err;
+            console.log("customer ID added to preorder list");
+            response.json(res)
+        });
+});
+
 module.exports = transactionRoutes;

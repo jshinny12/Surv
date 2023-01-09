@@ -4,6 +4,7 @@ import {useNavigate} from "react-router";
 
 export default function BrowseDiscounts() {
     const [discounts, setDiscounts] = useState([]);
+    const [preorders, setPreorders] = useState([]);
     const navigate = useNavigate();
 
     const current_id = localStorage.getItem("company_id");
@@ -16,13 +17,25 @@ export default function BrowseDiscounts() {
                 method: "GET"
             });
 
-            const discounts = await response.json();
-            console.log(discounts);
-            setDiscounts(discounts);
-            return discounts;
+            const db_discounts = await response.json();
+            console.log(db_discounts);
+            setDiscounts(db_discounts);
+            return db_discounts;
+        }
+
+        async function getAvailablePreorders() {
+            const response = await fetch('http://localhost:5000/preorders', {
+                method: "GET"
+            });
+
+            const db_preorders = await response.json();
+            console.log(db_preorders);
+            setPreorders(db_preorders);
+            return db_preorders;
         }
 
         const all_discounts = getAvailableDiscounts();
+        getAvailablePreorders();
 
         return;
     }, []);
@@ -38,6 +51,38 @@ export default function BrowseDiscounts() {
             );
         });
     }
+
+    // This method will map out the users on the table
+    function preorderList() {
+        return preorders.map((discount) => {
+            return (
+                <AvailablePreorder
+                    discount={discount}
+                    key={discount._id.nickname}
+                />
+            );
+        });
+    }
+
+    const AvailablePreorder = (props) => (
+        <tr>
+            <td>{props.discount.company_name}</td>
+            <td>{props.discount.nickname}</td>
+            <td>{props.discount.expiration_date}</td>
+            <td>{props.discount.percent}%</td>
+            <td>${props.discount.price}</td>
+
+            <td><button
+                onClick={() => {
+                    console.log(props.discount._id.company);
+                    console.log(props.discount._id.nickname);
+
+                    localStorage.setItem("preorder_discount_id", props.discount._id);
+                    navigate("/confirm-preorder");
+
+                }}>Preorder</button></td>
+        </tr>
+    );
 
     const AvailableDiscount = (props) => (
         <tr>
@@ -75,7 +120,7 @@ export default function BrowseDiscounts() {
     // This following section will display the table with the users of individuals.
     return (
         <div>
-            <h3>Available Discounts</h3>
+            <h3>Available Discounts for Sale</h3>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                 <th>Company</th>
@@ -85,6 +130,18 @@ export default function BrowseDiscounts() {
                 <th>Price</th>
                 </thead>
                 <tbody>{discountList()}</tbody>
+            </table>
+
+            <h3>Available Discounts for Preorder</h3>
+            <table className="table table-striped" style={{ marginTop: 20 }}>
+                <thead>
+                <th>Company</th>
+                <th>Discount Nickname</th>
+                <th>Expiration Date</th>
+                <th>Percent Discount</th>
+                <th>Price</th>
+                </thead>
+                <tbody>{preorderList()}</tbody>
             </table>
         </div>
     );

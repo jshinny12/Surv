@@ -25,6 +25,7 @@ const Customer = () => {
       }
 
     const [discounts, setDiscounts] = useState([]);
+    const [preorders, setPreorders] = useState([]);
 
     useEffect( () => {
         const user_id = localStorage.getItem("user_id")
@@ -40,7 +41,20 @@ const Customer = () => {
             return discounts;
         }
 
+        async function getPreorders() {
+            const response = await fetch('http://localhost:5000/customer-preorders/' + user_id, {
+                method: "GET"
+            });
+
+            const preorders = await response.json();
+            console.log(preorders);
+            console.log(user_id);
+            setPreorders(preorders);
+            return preorders;
+        }
+
         const all_discounts = getHeldDiscounts();
+        const all_preorders = getPreorders();
 
         return;
     }, []);
@@ -50,6 +64,18 @@ const Customer = () => {
         return discounts.map((discount) => {
             return (
                 <HeldDiscount
+                    discount={discount}
+                    key={discount._id}
+                />
+            );
+        });
+    }
+
+    // This method will map out the users on the table
+    function preorderList() {
+        return preorders.map((discount) => {
+            return (
+                <PlacedPreorder
                     discount={discount}
                     key={discount._id}
                 />
@@ -76,6 +102,22 @@ const Customer = () => {
         </tr>
     );
 
+    const PlacedPreorder = (props) => (
+        <tr>
+            <td>{props.discount.preorder_info[0].company_name}</td>
+            <td>{props.discount.preorder_info[0].nickname}</td>
+            <td>{props.discount.preorder_date}</td>
+            <td>{props.discount.preorder_info[0].percent}%</td>
+            <td>${props.discount.preorder_info[0].price}</td>
+            <td><button
+                onClick={() => {
+
+                    localStorage.setItem("discount_sell_id", props.discount._id);
+                    navigate('/confirm-sell');
+
+                }}>Cancel Preorder</button></td>
+        </tr>
+    );
 
     return (
       <>
@@ -83,7 +125,7 @@ const Customer = () => {
               <h1 style = {paragraphStyle}>My Discounts</h1>
           </div>
           <div>
-             <Nav.Link href="/discounts" style = {{color: 'black'}} onClick = {console.log("navigate to discounts")}>Browse Discounts</Nav.Link>
+             <button onClick = {() => {navigate("/discounts");}}>Browse Discounts</button>
           </div>
           <div>
               <h3>My Discounts</h3>
@@ -98,6 +140,19 @@ const Customer = () => {
                   <th>Discount's Unique Identifier</th>
                   </thead>
                   <tbody>{discountList()}</tbody>
+              </table>
+
+
+              <h3>My Preorders</h3>
+              <table className="table table-striped" style={{ marginTop: 20 }}>
+                  <thead>
+                  <th>Company</th>
+                  <th>Discount Nickname</th>
+                  <th>Preorder Date</th>
+                  <th>Percent Discount</th>
+                  <th>Price</th>
+                  </thead>
+                  <tbody>{preorderList()}</tbody>
               </table>
           </div>
       </>
