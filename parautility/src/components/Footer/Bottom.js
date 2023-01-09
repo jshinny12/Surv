@@ -39,7 +39,7 @@ export default function Bottom() {
       >
         <Container maxWidth="sm">
           <Typography variant="body1">
-            Parautility
+            Tradim
           </Typography>
           <Copyright />
         </Container>

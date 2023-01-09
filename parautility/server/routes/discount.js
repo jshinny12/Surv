@@ -92,6 +92,7 @@ discountRoutes.route("/customer-discounts").get(async function (req, res) {
 // This section will help you get a list of all the records.
 discountRoutes.route("/preorders").get(function (req, res) {
     let db_connect = dbo.getDb("tradim");
+    console.log("Pulling available preorders.")
     db_connect.collection("preorders").find({}).toArray(
         function (err, result) {
             if (err) throw err;
