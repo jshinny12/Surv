@@ -16,7 +16,7 @@ transactionRoutes.route("/sell-discount").post(function (req, response) {
     console.log("attempting to add transaction")
     let db_connect = dbo.getDb("tradim");
     let myobj = {
-        seller_id: req.body.buyer_id,
+        seller_id: req.body.seller_id,
         discount_id: req.body.discount_id,
         for_sale_date: new Date()
     };

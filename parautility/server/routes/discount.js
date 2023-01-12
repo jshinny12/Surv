@@ -171,6 +171,7 @@ discountRoutes.route("/discount/:id").get(function (req, res) {
 discountRoutes.route("/preorder/:id").get(function (req, res) {
     let db_connect = dbo.getDb("tradim");
     let myquery = { _id: ObjectId(req.params.id) };
+    console.log("Pulling info for one preorder type");
     db_connect.collection("preorders").findOne(myquery,
         function (err, result) {
             if (err) throw err;

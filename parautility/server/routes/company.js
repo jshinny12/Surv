@@ -70,26 +70,48 @@ companyRoutes.route("/create-discount-preorder").post(function (req, response) {
 companyRoutes.route("/create-discounts").post(function (req, response) {
     console.log("attempting to create new discounts")
     let db_connect = dbo.getDb("tradim");
-    console.log(req.body.expire);
 
-    const discounts = [];
-    for (let i = 0; i < req.body.count; i++) {
-        discounts[i] = {
+    // Update preorder_transactions is_filled to 1
+    db_connect.collection("preorder_transactions").updateMany(
+        {_id: ObjectId(req.body._id)},
+        {$set: {is_filled: 1}},
+        function (err, res) {
+            if (err) throw err;
+            console.log("preorder transactions marked as filled");
+        });
+
+    // Create discounts for each user
+    console.log("discounts loop");
+    const new_discounts = [];
+    for (let i = 0; i < req.body.preorder_users.length; i++) {
+        new_discounts[i] = {
             nickname: req.body.nickname,
             company_id: ObjectId(req.body.company_id),
             company_name: req.body.company_name,
             percent: req.body.percent,
             price: req.body.price,
             is_for_sale: 0,
-            expiration_date: new Date(req.body.expire)
+            expiration_date: new Date(req.body.expire),
+            owner_id: ObjectId(req.body.preorder_users[i]),
+            most_recent_transaction: new Date()
         }
     }
 
-    db_connect.collection("discounts").insertMany(discounts, function (err, res) {
+    db_connect.collection("discounts").insertMany(new_discounts, function (err, res) {
+        console.log("creating discounts");
         if (err) throw err;
     });
 
-    let discount_table_ids = discounts.map(get_discount_id);
+    db_connect.collection("preorders").updateOne(
+        {_id: ObjectId(req.body._id)},
+        {$set: {has_been_filled: 1}},
+        function (err, res) {
+            if (err) throw err;
+            console.log("preorder marked as filled");
+            response.json(res)
+        });
+
+    let discount_table_ids = new_discounts.map(get_discount_id);
 
     function get_discount_id(discount) {
         return ObjectId(discount._id);

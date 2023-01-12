@@ -1,21 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import emailjs from "@emailjs/browser";
 
 const IssueDiscounts = () => {
     const navigate = useNavigate();
 
-    const [form, setForm] = useState({
+    const [discount, setDiscount] = useState({
         nickname: "",
         percent: 0,
-        count: 0,
         price: 0,
-        expire: Date()
+        preorder_users: [],
+        expiration_date: 0
     });
 
+    const preorder_id = localStorage.getItem("preorder_to_fill_id");
+
+    useEffect( () => {
+        async function getPreorderToFill(current_id) {
+            const response = await fetch('http://localhost:5000/preorder/' + current_id, {
+                method: "GET"
+            });
+
+            const preorder = await response.json();
+            console.log(preorder);
+            setDiscount(preorder);
+            return preorder;
+        }
+
+        getPreorderToFill(preorder_id);
+
+        return;
+    }, []);
+
     // These methods will update the state properties.
-    function updateForm(value) {
-        return setForm((prev) => {
+    function updateDiscount(value) {
+        return setDiscount((prev) => {
             return { ...prev, ...value };
         });
     }
@@ -38,27 +57,18 @@ const IssueDiscounts = () => {
 
         // sendEmail(e, emailParams);
 
-        // When a post request is sent to the create url, we'll add a new record to the database.
-        const discounts = { ...form };
-        discounts.company_id = localStorage.getItem("view_company_id");
-        discounts.company_name = localStorage.getItem("view_company");
-
-        console.log(discounts.company_id);
-        discounts.percent = Number(discounts.percent);
-
         await fetch("http://localhost:5000/create-discounts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(discounts),
+            body: JSON.stringify(discount),
         })
             .catch(error => {
                 window.alert(error);
                 return;
             });
 
-        setForm({ nickname: "", percent: "0", count: "0", expire: Date()});
         navigate("/admin-one-company-view");
     }
 
@@ -66,57 +76,14 @@ const IssueDiscounts = () => {
     return (
         <div>
             <h3>Issue New Discounts</h3>
+            <div>
+                <p>Discount Nickname: {discount.nickname}</p>
+                <p>Percent Discount: {discount.percent}</p>
+                <p>Number of Discounts to Issue: {discount.preorder_users.length}</p>
+                <p>Initial Offer Price: {discount.price}</p>
+                <p>Expiration Date: {discount.expiration_date}</p>
+            </div>
             <form onSubmit={onSubmit}>
-                <div className="form-group">
-                    <label htmlFor="nickname">Discount Nickname</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="nickname"
-                        value={form.nickname}
-                        onChange={(e) => updateForm({ nickname: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="percent">Percent Discount</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="percent"
-                        value={form.percent}
-                        onChange={(e) => updateForm({ percent: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="count">Number of Discounts to Issue</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="count"
-                        value={form.count}
-                        onChange={(e) => updateForm({ count: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="count">Initial Offer Price</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="price"
-                        value={form.price}
-                        onChange={(e) => updateForm({ price: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="expire">Expiration Date</label>
-                    <input
-                        type="date"
-                        className="form-control"
-                        id="expire"
-                        value={form.expire}
-                        onChange={(e) => updateForm({ expire: e.target.value })}
-                    />
-                </div>
                 <div className="form-group">
                     <input
                         type="submit"

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import {useNavigate} from "react-router";
 
 const Company = (props) => (
@@ -58,16 +57,6 @@ const DiscountGroup = (props) => (
         </tr>
 );
 
-const PreorderGroup = (props) => (
-    <tr>
-        <td>{props.preorder.nickname}</td>
-        <td>{props.preorder.expiration_date}</td>
-        <td>{props.preorder.percent}%</td>
-        <td>${props.preorder.price}</td>
-        <td>{props.preorder.preorder_users.length}</td>
-    </tr>
-);
-
 export default function AdminSingleCompany() {
     const [companies, setCompanies] = useState([]);
     const [discounts, setDiscounts] = useState([]);
@@ -77,6 +66,21 @@ export default function AdminSingleCompany() {
     const current_id = localStorage.getItem("view_company_id");
     const current_name = localStorage.getItem("view_company");
     console.log(current_id);
+
+    const PreorderGroup = (props) => (
+        <tr>
+            <td>{props.preorder.nickname}</td>
+            <td>{props.preorder.expiration_date}</td>
+            <td>{props.preorder.percent}%</td>
+            <td>${props.preorder.price}</td>
+            <td>{props.preorder.preorder_users.length}</td>
+            <td>{props.preorder.has_been_filled == null ? 'No' : 'Yes'}</td>
+            <td><button onClick={() => {
+                localStorage.setItem("preorder_to_fill_id", props.preorder._id);
+                navigate("/issue-discounts");}
+            }>Issue These Preorders</button></td>
+        </tr>
+    );
 
     useEffect( () => {
         async function getCompanyAndOwner() {
@@ -190,9 +194,11 @@ export default function AdminSingleCompany() {
                 <th>Percent Discount</th>
                 <th>Price</th>
                 <th>Preorder Count</th>
+                <th>Filled Yet?</th>
                 </thead>
                 <tbody>{preorderList()}</tbody>
             </table>
+            <button onClick={onSubmitPreorder}>Create New Preorder</button>
 
             <h3>Issued Discounts</h3>
             <table className="table table-striped" style={{ marginTop: 20 }}>
@@ -209,10 +215,6 @@ export default function AdminSingleCompany() {
                 <tbody>{discountList()}</tbody>
             </table>
 
-            <form onSubmit={onSubmitPreorder}>
-                <input type="submit" value="Create Preorder"/>
-                <input type="submit" value="Issue Preordered Discounts"/>
-            </form>
         </div>
     );
 }
