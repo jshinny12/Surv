@@ -30,7 +30,7 @@ const Header = () => {
                     <Nav.Link href="/" style = {{color: 'white'}}>Home</Nav.Link>
                     {navBarRole === "merchant" ? <Nav.Link href="/my-company" style = {{color: 'white'}}>My Company</Nav.Link> : <></>}
                     {navBarRole === "customer" ? <Nav.Link href="/customer" style = {{color: 'white'}}>My Wallet</Nav.Link> : <></>}
-                    <Nav.Link href="/about" style = {{color: 'white'}} onClick = {console.log("hello")}>About</Nav.Link>
+                    <!-- <Nav.Link href="/about" style = {{color: 'white'}} onClick = {console.log("hello")}>About</Nav.Link> -->
                     <Nav.Link href="/login" style = {{color: 'white'}}>Login</Nav.Link>
                     {navBarRole === "admin" ? <Nav.Link href="/users" style = {{color: 'white'}}>View User Table</Nav.Link> : <></>}
                     {navBarRole === "admin" ? <Nav.Link href="/admin-company-list" style = {{color: 'white'}}>View Company Table</Nav.Link> : <></>}
