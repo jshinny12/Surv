@@ -73,7 +73,7 @@ const Login = () => {
             window.location.reload();
         }
         else {
-            alert("Email or Password Incorect. Please Try Again");
+            alert("Email or Password Incorrect. Please Try Again");
             return;
         }
     }
