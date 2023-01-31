@@ -21,7 +21,7 @@ const Header = () => {
         <div styles= {{backgroundColor: '#181818', border: '1px solid black'}}>
         <Navbar collapseOnSelect bg="dark" fixed="top" expand='lg'>
             <Container>
-            <Navbar.Brand href="/" style = {styles}><img src="./tradim/tradim_banner.png" height={40} align="left" href="/"/></Navbar.Brand>
+            <Navbar.Brand href="/" style = {styles}><img src="./tradim/tradim_logo.png" height={40} align="left" href="/"/></Navbar.Brand>
                 <Navbar.Brand href="/" style = {styles}>Welcome, {localStorage.getItem("fname")}</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsve-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
