@@ -45,6 +45,7 @@ const DiscountGroup = (props) => (
 export default function MyCompany() {
     const [companies, setCompanies] = useState([]);
     const [discounts, setDiscounts] = useState([]);
+    const [preorders, setPreorders] = useState([]);
     const navigate = useNavigate();
 
     const current_id = localStorage.getItem("company_id");
@@ -73,8 +74,19 @@ export default function MyCompany() {
             return discounts;
         }
 
+        async function getCompanyDiscountPreorders() {
+            const response = await fetch('http://localhost:5000/preorders/' + current_id, {
+                method: "GET"
+            });
+
+            const db_preorders = await response.json();
+            console.log(db_preorders);
+            setPreorders(db_preorders);
+        }
+
         getCompany();
         getCompanyDiscounts();
+        getCompanyDiscountPreorders();
 
         return;
         }, []);
@@ -105,14 +117,28 @@ export default function MyCompany() {
         });
     }
 
-    // This function will handle the submission.
-    /*
-    async function onSubmit(e) {
-        e.preventDefault();
+    const PreorderGroup = (props) => (
+        <tr>
+            <td>{props.preorder.nickname}</td>
+            <td>{props.preorder.expiration_date}</td>
+            <td>{props.preorder.percent}%</td>
+            <td>${props.preorder.price}</td>
+            <td>{props.preorder.preorder_users.length}</td>
+            <td>{props.preorder.has_been_filled == null ? 'No' : 'Yes'}</td>
+        </tr>
+    );
 
-        navigate("/issue-discounts");
+    // This method will map out the users on the table
+    function preorderList() {
+        return preorders.map((preorder) => {
+            return (
+                <PreorderGroup
+                    preorder={preorder}
+                    key={preorder._id.nickname}
+                />
+            );
+        });
     }
-     */
 
     // This following section will display the table with the users of individuals.
     return (
@@ -121,21 +147,34 @@ export default function MyCompany() {
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <tbody>{companyList()}</tbody>
             </table>
+
+            <h3>Preorder-Stage Discounts</h3>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                 <th>Discount Nickname</th>
                 <th>Expiration Date</th>
                 <th>Percent Discount</th>
                 <th>Price</th>
+                <th>Preorder Count</th>
+                <th>Filled Yet?</th>
+                </thead>
+                <tbody>{preorderList()}</tbody>
+            </table>
+
+            <h3>Issued Discounts</h3>
+            <table className="table table-striped" style={{ marginTop: 20 }}>
+                <thead>
+                <th>Discount Nickname</th>
+                <th>Expiration Date</th>
+                <th>Percent Discount</th>
+                <th>Price</th>
+                <th>Preorder Count</th>
                 <th>Number Issued</th>
-                <th>Number Outstanding</th>
-                <th>Number Held</th>
+                <th>Number Currently for Sale</th>
+                <th>Datetime of Most Recent Transaction</th>
                 </thead>
                 <tbody>{discountList()}</tbody>
             </table>
-            {/*<form onSubmit={onSubmit}>
-                <input type="submit" value="Issue Discounts"/>
-            </form> */}
         </div>
     );
 }

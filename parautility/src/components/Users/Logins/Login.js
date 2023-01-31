@@ -64,11 +64,13 @@ const Login = () => {
         localStorage.setItem("user_id", db_user._id);
 
         if (db_user.role === "merchant") {
+            console.log("company_id");
             localStorage.setItem("company_id", db_user.company_id);
         }
 
         if (pw_hash === db_user.pw_hash) {
             navigate("/login-landing");
+            window.location.reload();
         }
         else {
             alert("Email or Password Incorect. Please Try Again");

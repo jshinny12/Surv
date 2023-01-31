@@ -121,9 +121,6 @@ const Customer = () => {
 
     return (
       <>
-          <div style = {contentStyle}>
-              <h1 style = {paragraphStyle}>My Discounts</h1>
-          </div>
           <div>
              <button onClick = {() => {navigate("/discounts");}}>Browse Discounts</button>
           </div>
